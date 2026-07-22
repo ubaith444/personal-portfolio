@@ -130,6 +130,8 @@ img {
   white-space: normal;
 }
 
+/* ─── Float animations ─────────────────────────────────────────── */
+
 .float-slow {
   animation: floatY 7s ease-in-out infinite;
 }
@@ -142,13 +144,37 @@ img {
   animation: floatY 4.8s ease-in-out infinite;
 }
 
+/* ─── Pulse ────────────────────────────────────────────────────── */
+
 .pulse-soft {
   animation: pulseSoft 3.5s ease-in-out infinite;
 }
 
+/* ─── Reveal ───────────────────────────────────────────────────── */
+
+/* Default: visible for SSR / no-JS */
 .reveal-in {
-  animation: revealIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  opacity: 1;
+  transform: translateY(0);
 }
+
+/* When JS upgrades to observer-based, this class is applied */
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: none;
+}
+
+[data-reveal="visible"] {
+  animation: slideUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Legacy fallback for any reveal-in that didn't get upgraded */
+.reveal-in:not([data-reveal]) {
+  animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Magnetic lift ────────────────────────────────────────────── */
 
 .magnetic-lite {
   transition:
@@ -163,6 +189,8 @@ img {
 .magnetic-lite:active {
   transform: scale(0.98);
 }
+
+/* ─── Particle field (blog covers) ────────────────────────────── */
 
 .particle-field circle {
   animation: particleDrift 5s ease-in-out infinite;
@@ -181,23 +209,141 @@ img {
   transform: translateZ(0);
 }
 
-@keyframes floatY {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
+/* ─── Gradient text ────────────────────────────────────────────── */
 
-  50% {
-    transform: translateY(-12px);
-  }
+.gradient-text {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #2563eb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s linear infinite;
 }
 
-@keyframes revealIn {
-  from {
-    opacity: 1;
-    transform: translateY(8px);
-  }
+/* ─── Typing cursor ────────────────────────────────────────────── */
 
+.typing-cursor::after {
+  content: "|";
+  display: inline-block;
+  margin-left: 2px;
+  animation: blinkCursor 1.1s step-end infinite;
+  -webkit-text-fill-color: #2563eb;
+  font-weight: 300;
+}
+
+.dark .typing-cursor::after {
+  -webkit-text-fill-color: #60a5fa;
+}
+
+/* ─── Shimmer sweep ────────────────────────────────────────────── */
+
+.shimmer-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-on-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: none;
+  pointer-events: none;
+}
+
+.group:hover .shimmer-on-hover::after {
+  animation: shimmerSweep 0.7s ease forwards;
+}
+
+/* ─── Border glow ──────────────────────────────────────────────── */
+
+.border-glow-hover {
+  transition:
+    box-shadow 300ms ease,
+    border-color 300ms ease,
+    transform 200ms ease;
+}
+
+.border-glow-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.4),
+    0 8px 32px rgba(37, 99, 235, 0.12),
+    0 20px 48px rgba(37, 99, 235, 0.06);
+  transform: translateY(-3px);
+}
+
+/* ─── Timeline dot radiate ─────────────────────────────────────── */
+
+.dot-radiate {
+  position: relative;
+}
+
+.dot-radiate::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(96, 165, 250, 0.3);
+  animation: radiateRing 2.2s ease-out infinite;
+}
+
+/* ─── Verified badge pulse (green) ────────────────────────────── */
+
+.badge-verified-pulse {
+  animation: verifiedPulse 2.8s ease-in-out infinite;
+}
+
+/* ─── Published badge glow ─────────────────────────────────────── */
+
+.badge-published-glow {
+  animation: publishedGlow 2.4s ease-in-out infinite;
+}
+
+/* ─── Rotating ring (hero SVG) ─────────────────────────────────── */
+
+.rotate-slow-cw {
+  animation: rotateCW 28s linear infinite;
+  transform-origin: 300px 300px;
+}
+
+.rotate-slow-ccw {
+  animation: rotateCCW 38s linear infinite;
+  transform-origin: 300px 300px;
+}
+
+/* ─── SVG stroke dash draw ─────────────────────────────────────── */
+
+.dash-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dashDraw 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+/* ─── Stats bar counter shimmer ────────────────────────────────── */
+
+.stat-pill {
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stat-pill:nth-child(1) { animation-delay: 0.55s; }
+.stat-pill:nth-child(2) { animation-delay: 0.7s; }
+.stat-pill:nth-child(3) { animation-delay: 0.85s; }
+
+/* ═══════════════════════════════════════════════════════════════ */
+/*  KEYFRAMES                                                       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -205,25 +351,61 @@ img {
 }
 
 @keyframes pulseSoft {
-  0%,
-  100% {
-    opacity: 0.72;
-  }
-
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 0.72; }
+  50%       { opacity: 1; }
 }
 
 @keyframes particleDrift {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(0, 0);
     opacity: 0.35;
   }
-
   50% {
     transform: translate(10px, -12px);
     opacity: 0.9;
   }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes radiateRing {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes verifiedPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+  50%       { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+}
+
+@keyframes publishedGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); opacity: 1; }
+  50%       { box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.28); opacity: 0.85; }
+}
+
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes dashDraw {
+  to { stroke-dashoffset: 0; }
 }

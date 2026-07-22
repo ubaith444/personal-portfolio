@@ -1,11 +1,18 @@
 import {
   ArrowRight,
+  BrainCircuit,
   CheckCircle2,
+  Cloud,
+  Cpu,
+  Database,
   ExternalLink,
   Github,
+  Layers,
   Linkedin,
   Mail,
-  ShieldCheck
+  Network,
+  ShieldCheck,
+  Terminal
 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -61,10 +68,10 @@ const homeProjectStories: Record<string, { summary: string; points: string[] }> 
       "A workflow platform for teams that need approvals, traceability, and clear handoffs before automation can be trusted.",
     points: ["Human review where it matters", "Clear operating views for teams", "Audit trails that explain what happened"]
   },
-  "footballiq-ai": {
+  "unscript-one": {
     summary:
-      "A football analysis workspace that keeps match context, scouting notes, and generated reports in one place.",
-    points: ["Live and post-match analysis", "Scouting flows for faster comparison", "Careful handling of football claims"]
+      "An enterprise AI workspace that unifies RAG, AI Agents, MCP, Guardrails, and LLM Evaluation into one production-oriented platform.",
+    points: ["Hybrid RAG with citations and reranking", "LangGraph agents with real GitHub MCP", "Automated Ragas eval on every deploy"]
   },
   "insightai-agent": {
     summary:
@@ -119,20 +126,39 @@ const homeArticlePreviews: Record<string, { category: string; title: string; exc
 
 const skillGroups = [
   {
-    title: "AI & Machine Learning",
-    skills: ["AI Agents", "Generative AI", "LLM Engineering", "RAG", "LangGraph", "LangChain", "OpenAI", "Claude", "Vector Databases"]
+    title: "Programming Languages",
+    icon: Terminal,
+    skills: ["Python", "JavaScript", "TypeScript", "SQL"]
   },
   {
-    title: "Backend & APIs",
-    skills: ["FastAPI", "Python", "PostgreSQL", "Redis", "REST APIs", "Webhooks", "RBAC", "Audit Logs", "Background Jobs"]
+    title: "Artificial Intelligence",
+    icon: BrainCircuit,
+    skills: ["Machine Learning", "Generative AI", "Large Language Models (LLMs)", "Retrieval-Augmented Generation (RAG)", "AI Agents", "Prompt Engineering", "Natural Language Processing (NLP)", "Computer Vision"]
   },
   {
-    title: "Frontend & UI",
-    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Dashboards", "Case Study UI", "Responsive Layouts"]
+    title: "AI Engineering",
+    icon: Cpu,
+    skills: ["LangChain", "LangGraph", "Model Context Protocol (MCP)", "LLMOps", "AI Guardrails", "RAG Evaluation (Ragas)", "Vector Databases", "Embeddings", "Hybrid Search", "Semantic Search"]
   },
   {
-    title: "Tools & Platforms",
-    skills: ["Docker", "GitHub", "Vercel", "CI Workflows", "pgvector", "Raspberry Pi", "Charts", "Evaluation Flows"]
+    title: "Frameworks & Libraries",
+    icon: Layers,
+    skills: ["FastAPI", "Next.js", "React", "TensorFlow", "Scikit-learn", "Hugging Face Transformers", "OpenCV"]
+  },
+  {
+    title: "Databases & Storage",
+    icon: Database,
+    skills: ["PostgreSQL", "MongoDB", "Qdrant", "pgvector", "Supabase"]
+  },
+  {
+    title: "Cloud & DevOps",
+    icon: Cloud,
+    skills: ["Docker", "Git", "GitHub", "GitHub Actions", "Vercel", "Railway", "Render"]
+  },
+  {
+    title: "APIs & Integrations",
+    icon: Network,
+    skills: ["REST APIs", "WebSockets", "GitHub MCP", "Google Gemini API", "Groq API"]
   }
 ];
 
@@ -155,7 +181,7 @@ const bestFitRoles = [
 
 const proofOfWork = [
   "Multi-Agent Business Automation Platform: workflow orchestration, approval gates, RBAC, audit logging, and webhooks.",
-  "FootballIQ AI: football analytics, scouting views, match summaries, and claim-aware product design.",
+  "Unscript One: enterprise AI workspace with hybrid RAG, LangGraph agents, GitHub MCP, guardrails, and Ragas evaluation.",
   "InsightAI Agent: natural language analytics with query review, chart generation, and readable explanations.",
   "AI Teacher Robot: classroom attendance, speech interaction, retrieval, computer vision, and device integration."
 ];
@@ -179,7 +205,7 @@ const homepageFaq = [
   {
     question: "What AI projects has Ubaith Sherif built?",
     answer:
-      "His flagship projects include Multi-Agent Business Automation Platform, FootballIQ AI, InsightAI Agent, and AI Teacher Robot."
+      "His flagship projects include Multi-Agent Business Automation Platform, Unscript One (AI-Native Enterprise Workspace), InsightAI Agent, and AI Teacher Robot."
   },
   {
     question: "What is Ubaith Sherif's tech stack?",
@@ -260,10 +286,10 @@ export default function Home() {
         <div className="relative mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-16 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.04fr_0.96fr] lg:px-8">
           <Reveal>
             <div>
-              <p className="mb-5 text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">
+              <p className="gradient-text mb-5 text-sm font-semibold uppercase tracking-[0.22em]">
                 AI Engineer | Generative AI | Full-Stack AI Developer
               </p>
-              <h1 className="text-balance text-5xl font-semibold leading-[1.02] text-zinc-950 dark:text-white sm:text-6xl lg:text-7xl">
+              <h1 className="typing-cursor text-balance text-5xl font-semibold leading-[1.02] text-zinc-950 dark:text-white sm:text-6xl lg:text-7xl">
                 I turn rough AI ideas into software that holds up in use.
               </h1>
               <p className="mt-7 max-w-2xl text-pretty text-lg leading-8 text-slate-600 dark:text-zinc-300">
@@ -279,7 +305,7 @@ export default function Home() {
                   </Button>
                 </Magnetic>
                 <Magnetic>
-                  <Button download="Ubaith-Sherif-Resume.pdf" href="/resume.pdf" variant="secondary">
+                  <Button download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" variant="secondary">
                     Download Resume
                   </Button>
                 </Magnetic>
@@ -288,6 +314,22 @@ export default function Home() {
                   <IconLink href={profile.linkedin} icon={<Linkedin aria-hidden="true" size={18} />} label="LinkedIn" />
                   <IconLink href={`mailto:${profile.email}`} icon={<Mail aria-hidden="true" size={18} />} label="Email" />
                 </div>
+              </div>
+              {/* Stats bar */}
+              <div className="mt-8 flex flex-wrap gap-3">
+                {[
+                  { value: "15", label: "Projects Built" },
+                  { value: "7", label: "Skill Areas" },
+                  { value: "1", label: "Published Research" }
+                ].map((stat) => (
+                  <div
+                    className="stat-pill flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 text-sm shadow-sm dark:border-white/10 dark:bg-white/[0.06]"
+                    key={stat.label}
+                  >
+                    <span className="text-lg font-bold text-blue-600 dark:text-blue-300">{stat.value}</span>
+                    <span className="text-zinc-600 dark:text-zinc-300">{stat.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>
@@ -368,7 +410,7 @@ export default function Home() {
               const story = homeProjectStories[project.slug];
               return (
                 <Reveal delay={index * 0.04} key={project.slug}>
-                  <Card className="group h-full p-6 transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_16px_42px_rgba(37,99,235,0.10)] md:p-7 dark:hover:border-blue-400/30">
+                  <Card className="group h-full p-6 border-glow-hover md:p-7">
                     <div className="flex h-full flex-col">
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -410,24 +452,37 @@ export default function Home() {
         <SectionHeading eyebrow="Skills" title="Technical Strengths">
           A clean summary of the technologies and engineering areas represented across the portfolio.
         </SectionHeading>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {skillGroups.map((group, index) => (
-            <Reveal delay={index * 0.04} key={group.title}>
-              <Card className="h-full p-6">
-                <h3 className="text-xl font-semibold text-zinc-950 dark:text-white">{group.title}</h3>
-                <div className="mt-5 flex min-w-0 max-w-full flex-wrap gap-2 overflow-hidden">
-                  {group.skills.map((skill) => (
-                    <span
-                      className="skill-chip rounded-full border border-zinc-200 bg-[#f9fafb] px-3 py-1.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200"
-                      key={skill}
-                    >
-                      {skill}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {skillGroups.map((group, index) => {
+            const Icon = group.icon;
+            return (
+              <Reveal delay={index * 0.04} key={group.title}>
+                <Card className="group flex h-full flex-col p-6 border-glow-hover">
+                  <div className="mb-5 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="shimmer-on-hover grid size-10 place-items-center rounded-[8px] border border-blue-100 bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white">
+                        <Icon aria-hidden="true" size={20} />
+                      </span>
+                      <h3 className="text-lg font-semibold text-zinc-950 dark:text-white">{group.title}</h3>
+                    </div>
+                    <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-semibold text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
+                      {group.skills.length}
                     </span>
-                  ))}
-                </div>
-              </Card>
-            </Reveal>
-          ))}
+                  </div>
+                  <div className="mt-auto flex min-w-0 max-w-full flex-wrap gap-2 pt-2">
+                    {group.skills.map((skill) => (
+                      <span
+                        className="skill-chip rounded-full border border-zinc-200 bg-[#f9fafb] px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:bg-blue-50/50 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200 dark:hover:border-blue-400/40 dark:hover:bg-blue-400/10"
+                        key={skill}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -472,7 +527,7 @@ export default function Home() {
             {internships.map((item, index) => (
               <Reveal delay={index * 0.06} key={item.company}>
                 <div className={`relative grid gap-6 md:grid-cols-2 ${index % 2 ? "" : "md:[&>div:first-child]:col-start-2"}`}>
-                  <span className="absolute left-2 top-6 z-10 size-4 rounded-full border-4 border-zinc-950 bg-blue-300 md:left-[calc(50%-8px)]" />
+                  <span className="dot-radiate absolute left-2 top-6 z-10 size-4 rounded-full border-4 border-zinc-950 bg-blue-300 md:left-[calc(50%-8px)]" />
                   <div className="rounded-[8px] border border-white/12 bg-white/[0.055] p-6">
                     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">{item.duration}</p>
                     <h3 className="mt-3 text-2xl font-semibold">{item.role}</h3>
@@ -505,6 +560,8 @@ export default function Home() {
         <SectionHeading eyebrow="Education" title="Academic base in AI and Data Science.">
           Coursework and final-year work shaped around machine learning, data systems, computer vision, NLP, and software delivery.
         </SectionHeading>
+
+        {/* Degree Card */}
         <Card className="grid gap-8 p-6 md:grid-cols-[0.82fr_1.18fr] md:p-8">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">{education.duration}</p>
@@ -522,33 +579,91 @@ export default function Home() {
             </div>
           </div>
         </Card>
+
+        {/* Academic Highlights */}
+        <Reveal delay={0.06}>
+          <div className="mt-6">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">Academic Highlights</p>
+            <Card className="p-6 md:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-200">
+                    {education.publication.category}
+                  </span>
+                  <span className="badge-published-glow rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
+                    {education.publication.status}
+                  </span>
+                </div>
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Published Research Paper</span>
+              </div>
+              <h3 className="mt-4 text-xl font-semibold leading-8 text-zinc-950 dark:text-white md:text-2xl">
+                {education.publication.title}
+              </h3>
+              <p className="mt-2 text-sm font-semibold text-blue-600 dark:text-blue-300">
+                {education.publication.journal}
+              </p>
+              <p className="mt-4 leading-7 text-slate-600 dark:text-zinc-300">
+                {education.publication.description}
+              </p>
+              <div className="mt-6 rounded-[8px] border border-zinc-200 bg-[#f9fafb] p-5 dark:border-white/10 dark:bg-white/[0.045]">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">Research Focus Areas</p>
+                <div className="flex flex-wrap gap-2">
+                  {education.publication.researchAreas.map((area) => (
+                    <span
+                      className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200"
+                      key={area}
+                    >
+                      <span className="size-1.5 rounded-full bg-blue-600 dark:bg-blue-300" />
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Reveal>
       </section>
 
       <section className="border-y border-zinc-200 bg-[#f3f4f6]/70 py-20 dark:border-white/10 dark:bg-white/[0.025]" id="certifications">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="Certificates" title="Relevant credentials, kept simple.">
             Short, verifiable cards for the certifications most connected to the work shown here.
-          </SectionHeading>
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          </SectionHeading>          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {certifications.map((certification, index) => (
-              <Reveal delay={index * 0.05} key={certification.title}>
-                <Card className="flex h-full flex-col p-6 transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_16px_42px_rgba(15,23,42,0.08)]">
-                  <div className="mb-6 flex items-center justify-between gap-4">
-                    <span className="grid size-14 place-items-center rounded-[8px] border border-zinc-200 bg-zinc-950 text-sm font-bold tracking-wide text-white shadow-sm dark:border-white/10 dark:bg-white dark:text-zinc-950">
+              <Reveal delay={index * 0.04} key={certification.title}>
+                <Card className="group flex h-full flex-col p-6 border-glow-hover">
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <span className="shimmer-on-hover grid size-12 place-items-center rounded-[8px] border border-zinc-200 bg-zinc-950 text-sm font-bold tracking-wide text-white shadow-sm dark:border-white/10 dark:bg-white dark:text-zinc-950">
                       {certification.logo}
                     </span>
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">Verified</span>
+                    <div className="flex items-center gap-2">
+                      <span className="badge-verified-pulse rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">Verified</span>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{certification.issueDate}</span>
+                    </div>
                   </div>
                   <h3 className="text-lg font-semibold leading-7 text-zinc-950 dark:text-white">{certification.title}</h3>
-                  <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">{certification.organization}</p>
-                  <div className="mt-5 space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-                    <p>Issued: {certification.issueDate}</p>
-                    <p className="break-words">Credential ID: {certification.credentialId}</p>
+                  <p className="mt-1 text-sm font-medium text-blue-600 dark:text-blue-300">{certification.organization}</p>
+                  
+                  {certification.skills && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {certification.skills.map((skill) => (
+                        <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:bg-white/8 dark:text-zinc-300" key={skill}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-6">
+                    <div className="mb-4 text-xs text-zinc-500 dark:text-zinc-400">
+                      <span className="font-semibold text-zinc-700 dark:text-zinc-300">ID: </span>
+                      <span className="break-all font-mono">{certification.credentialId}</span>
+                    </div>
+                    <Button href={certification.credentialUrl} variant="secondary">
+                      Show Credential
+                      <ExternalLink aria-hidden="true" size={16} />
+                    </Button>
                   </div>
-                  <Button className="mt-6" href={certification.credentialUrl} variant="secondary">
-                    Show Credential
-                    <ExternalLink aria-hidden="true" size={16} />
-                  </Button>
                 </Card>
               </Reveal>
             ))}
@@ -630,7 +745,7 @@ export default function Home() {
                   <Github aria-hidden="true" size={16} />
                   GitHub
                 </Button>
-                <Button download="Ubaith-Sherif-Resume.pdf" href="/resume.pdf" variant="secondary">
+                <Button download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" variant="secondary">
                   Download Resume
                 </Button>
               </div>
@@ -655,11 +770,20 @@ function AbstractEditorialVisual() {
             <stop offset="1" stopColor="#7c3aed" stopOpacity="0.65" />
           </linearGradient>
         </defs>
-        <circle cx="300" cy="300" r="210" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.45" />
-        <circle className="pulse-soft" cx="300" cy="300" r="150" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.55" />
-        <path className="float-slow" d="M180 330c42-110 170-166 258-104 72 51 55 173-31 220-98 54-266-3-227-116Z" fill="url(#editorial-blue)" opacity="0.16" />
-        <path className="float-medium" d="M154 252c60-82 174-116 271-75 72 30 111 111 82 184-28 72-116 112-205 89-111-29-207-118-148-198Z" fill="none" stroke="url(#editorial-blue)" strokeWidth="2" opacity="0.75" />
-        <path d="M160 370 444 206M204 180l216 238M142 292h316M286 130v346" stroke="#2563eb" strokeWidth="1.5" opacity="0.28" />
+        {/* Outer slowly rotating dashed ring */}
+        <circle className="rotate-slow-cw" cx="300" cy="300" r="210" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.4" strokeDasharray="16 10" />
+        {/* Inner counter-rotating ring */}
+        <circle className="rotate-slow-ccw" cx="300" cy="300" r="155" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.2" opacity="0.32" strokeDasharray="6 14" />
+        {/* Innermost pulsing ring */}
+        <circle className="pulse-soft" cx="300" cy="300" r="100" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.55" />
+        {/* Floating blob fill */}
+        <path className="float-slow" d="M180 330c42-110 170-166 258-104 72 51 55 173-31 220-98 54-266-3-227-116Z" fill="url(#editorial-blue)" opacity="0.1" />
+        {/* Animated draw-in connector lines */}
+        <path className="dash-draw" d="M160 370 444 206" stroke="#2563eb" strokeWidth="1.5" opacity="0.3" strokeLinecap="round" />
+        <path className="dash-draw" d="M204 180l216 238" stroke="#7c3aed" strokeWidth="1.5" opacity="0.26" strokeLinecap="round" style={{ animationDelay: "0.35s" }} />
+        <path className="dash-draw" d="M142 292h316" stroke="#2563eb" strokeWidth="1.5" opacity="0.22" strokeLinecap="round" style={{ animationDelay: "0.7s" }} />
+        <path className="dash-draw" d="M286 130v346" stroke="#7c3aed" strokeWidth="1.5" opacity="0.2" strokeLinecap="round" style={{ animationDelay: "1.05s" }} />
+        {/* Orbital nodes */}
         {[
           [160, 370],
           [444, 206],
@@ -670,11 +794,22 @@ function AbstractEditorialVisual() {
           [286, 130],
           [286, 476]
         ].map(([cx, cy], index) => (
-          <circle className={index % 2 ? "float-fast" : "pulse-soft"} cx={cx} cy={cy} fill={index % 2 ? "#7c3aed" : "#2563eb"} key={`${cx}-${cy}`} r="7" opacity="0.78" />
+          <circle
+            className={index % 2 ? "float-fast" : "pulse-soft"}
+            cx={cx}
+            cy={cy}
+            fill={index % 2 ? "#7c3aed" : "#2563eb"}
+            key={`${cx}-${cy}`}
+            r="8"
+            opacity="0.82"
+          />
         ))}
-        <rect x="220" y="244" width="160" height="112" rx="28" fill="white" opacity="0.7" />
-        <rect x="220" y="244" width="160" height="112" rx="28" fill="none" stroke="#d4d4d8" />
+        {/* Center card */}
+        <rect x="220" y="244" width="160" height="112" rx="28" fill="white" opacity="0.72" />
+        <rect x="220" y="244" width="160" height="112" rx="28" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.2" opacity="0.45" />
         <path d="M252 285h96M252 310h62" stroke="#18181b" strokeWidth="8" strokeLinecap="round" opacity="0.72" />
+        {/* Center glow halo */}
+        <ellipse cx="300" cy="300" rx="68" ry="46" fill="url(#editorial-blue)" opacity="0.06" />
       </svg>
     </div>
   );
@@ -712,7 +847,7 @@ function Footer() {
             <Mail aria-hidden="true" size={15} />
             Email
           </a>
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href="/resume.pdf">
+          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" download="Ubaith_Sherif_AI_Engineer_Resume.pdf">
             Resume
           </a>
           <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href="#home">

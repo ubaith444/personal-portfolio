@@ -6,14 +6,15 @@ const routes = [
   "/",
   "/contact",
   "/projects/multi-agent-business-automation-platform",
-  "/projects/footballiq-ai",
+  "/projects/unscript-one",
   "/projects/insightai-agent",
   "/projects/ai-teacher-robot",
   "/blog/building-production-ai-agents",
   "/blog/enterprise-rag-architecture",
   "/sitemap.xml",
   "/robots.txt",
-  "/resume.pdf"
+  "/resume.pdf",
+  "/Ubaith_Sherif_AI_Engineer_Resume.pdf"
 ];
 
 async function get(path) {

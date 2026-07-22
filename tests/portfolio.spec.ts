@@ -4,7 +4,7 @@ const routes = [
   "/",
   "/contact",
   "/projects/multi-agent-business-automation-platform",
-  "/projects/footballiq-ai",
+  "/projects/unscript-one",
   "/projects/insightai-agent",
   "/projects/ai-teacher-robot",
   "/blog/enterprise-rag-architecture",
@@ -21,7 +21,7 @@ test.describe("production routes", () => {
   }
 
   test("resume downloads successfully", async ({ request }) => {
-    const response = await request.get("/resume.pdf");
+    const response = await request.get("/Ubaith_Sherif_AI_Engineer_Resume.pdf");
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
   });

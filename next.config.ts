@@ -17,11 +17,15 @@ const nextConfig: NextConfig = {
     ]
   },
   async headers() {
+    const isDev = process.env.NODE_ENV === "development";
+    const scriptSrc = isDev
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com"
+      : "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com";
+
     const securityHeaders = [
       {
         key: "Content-Security-Policy",
-        value:
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://github-readme-stats.vercel.app; font-src 'self' data:; connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'"
+        value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://github-readme-stats.vercel.app; font-src 'self' data:; connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'`
       },
       {
         key: "Referrer-Policy",

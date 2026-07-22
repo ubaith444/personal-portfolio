@@ -274,7 +274,7 @@ export default function ContactPage() {
             <FooterLink href={profile.github} label="GitHub" />
             <FooterLink href={profile.linkedin} label="LinkedIn" />
             <FooterLink href={`mailto:${profile.email}`} label="Email" />
-            <FooterLink href="/resume.pdf" label="Resume" />
+            <FooterLink download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" label="Resume" />
             <FooterLink href="#top" label="Back to Top" />
           </div>
         </div>
@@ -283,10 +283,11 @@ export default function ContactPage() {
   );
 }
 
-function FooterLink({ href, label }: { href: string; label: string }) {
+function FooterLink({ download, href, label }: { download?: string; href: string; label: string }) {
   return (
     <a
       className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white"
+      download={download}
       href={href}
       rel={href.startsWith("http") ? "noreferrer" : undefined}
       target={href.startsWith("http") ? "_blank" : undefined}

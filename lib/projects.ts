@@ -1,4 +1,4 @@
-import { Bot, BrainCircuit, ChartSpline, GraduationCap, type LucideIcon } from "lucide-react";
+import { Bot, BrainCircuit, Building2, GraduationCap, type LucideIcon } from "lucide-react";
 
 export type Project = {
   slug: string;
@@ -77,52 +77,58 @@ export const projects: Project[] = [
     ]
   },
   {
-    slug: "footballiq-ai",
-    title: "FootballIQ AI",
-    eyebrow: "Football analysis",
-    industry: "Sports analytics",
-    status: "Flagship prototype",
-    subtitle: "Football analytics, scouting views, transfer context, and generated match reports.",
+    slug: "unscript-one",
+    title: "Unscript One — AI-Native Enterprise Workspace",
+    eyebrow: "Enterprise AI platform",
+    industry: "Enterprise AI",
+    status: "Founder project",
+    subtitle: "RAG, AI Agents, MCP, Guardrails, and LLM Evaluation unified into one production-oriented workspace.",
     description:
-      "A football analysis platform that combines match context, model-assisted summaries, player notes, scouting workflows, and dashboard-driven analysis.",
-    icon: ChartSpline,
-    tags: ["Live Analytics", "Predictions", "LLM Reports", "Dashboards"],
+      "Unscript One is an enterprise-grade AI workspace that unifies Retrieval-Augmented Generation, AI Agents, Model Context Protocol, Guardrails, and LLM Evaluation into a single production platform for document intelligence, repository analysis, research automation, and enterprise knowledge management.",
+    icon: Building2,
+    tags: ["RAG", "LangGraph", "MCP", "Guardrails", "Ragas", "FastAPI", "Next.js"],
     problem:
-      "Football analysis tools often split live data, scouting notes, transfer context, and written match reports across disconnected surfaces.",
+      "Organizations building AI internally repeatedly hit the same wall: chatbots that hallucinate, no visibility into whether answers are grounded, no control over tool access, and no way to measure quality over time.",
     solution:
-      "FootballIQ AI brings match analytics, player notes, generated summaries, and scouting views into one product surface for faster review.",
+      "Unscript One delivers the smallest complete version of the real enterprise AI problem: grounded answers via hybrid RAG, controlled tool access through MCP, measurable quality via automated Ragas evaluation, and full observability on one dashboard.",
     architecture: [
-      "Frontend match center with live analytics, dashboards, and report surfaces.",
-      "Prediction and summarization APIs that separate model outputs from verified source data.",
-      "Player and club context layer for scouting, transfer notes, and comparisons.",
-      "Report generation pipeline for post-match summaries and decision notes."
+      "Next.js streaming workspace with real-time AI responses, inline citations, and multi-session chat history.",
+      "FastAPI backend services for document ingestion, retrieval, agent orchestration, and guardrail enforcement.",
+      "LangGraph-powered Research and Coding Agents with GitHub MCP integration for repository-aware workflows.",
+      "Hybrid retrieval pipeline: BM25 + vector search with reranking, backed by Qdrant and Supabase PostgreSQL.",
+      "Pre-generation guardrail layer for prompt injection detection, PII filtering, and request validation.",
+      "Automated Ragas evaluation loop running on every deploy, with metrics surfaced on a public /status page."
     ],
-    architecturePreview: ["Live match feed", "Prediction service", "LLM report generator"],
+    architecturePreview: ["Hybrid RAG pipeline", "LangGraph agent + MCP", "Ragas eval loop"],
     features: [
-      "Live match analytics and momentum views.",
-      "AI predictions with confidence-oriented presentation.",
-      "Player context and scouting profiles.",
-      "LLM summaries for match reports and tactical notes."
+      "Enterprise RAG with recursive chunking, hybrid retrieval, reranking, and citation-based responses.",
+      "AI Research and Coding Agents powered by LangGraph with real GitHub MCP integration.",
+      "Prompt injection and PII guardrails running pre-generation with visible pass/fail badges.",
+      "Automated LLM evaluation using Ragas with faithfulness and answer relevance metrics.",
+      "AI Observability Dashboard and public Service Health Monitoring at /status.",
+      "Multi-session AI conversations with document ingestion and knowledge management.",
     ],
-    stack: ["Python", "FastAPI", "React", "TypeScript", "LLMs", "RAG", "PostgreSQL", "Charts"],
+    stack: ["Python", "FastAPI", "Next.js", "TypeScript", "LangGraph", "Google Gemini", "Qdrant", "PostgreSQL", "Supabase", "MCP", "Ragas", "Tailwind CSS", "Docker", "GitHub"],
     challenges: [
-      "Avoiding unsupported transfer or player claims without a verified source path.",
-      "Designing dashboards that work for live scanning and deep analysis.",
-      "Balancing AI summaries with visible provenance and confidence cues."
+      "Building a production-ready hybrid retrieval pipeline that balances BM25 recall with vector search precision.",
+      "Designing LangGraph agent flows that expose tool call traces transparently in the UI.",
+      "Running Ragas evaluation automatically on every deploy without blocking the release pipeline.",
+      "Keeping prompt injection and PII guardrails fast enough to run pre-generation without adding noticeable latency."
     ],
     metrics: [
-      "Built around verified-data boundaries instead of unsourced claims.",
-      "Optimized for analyst workflows: scan, compare, summarize, decide.",
-      "Product direction supports live, post-match, and scouting workflows."
+      "Faithfulness and answer relevance scores measured automatically on 20 hand-written test queries.",
+      "Public /status page showing real uptime, request count, last eval timestamp, and current faithfulness score.",
+      "Hybrid retrieval combining BM25 and vector search for higher recall than either alone.",
+      "One real MCP tool call to GitHub — not a mock."
     ],
-    impact: "Turns match, player, and scouting context into a single analysis workspace.",
-    timeline: "Live hub, data model, dashboards, intelligence views, reporting UX.",
+    impact: "Proves that a single builder can ship the core of what enterprise AI platform teams build: grounded answers, controlled tool access, and measurable quality, all visible on one dashboard.",
+    timeline: "RAG pipeline, LangGraph agents, MCP integration, guardrails, Ragas eval loop, Next.js workspace, status page.",
     github: "https://github.com/Ubaith444",
-    demo: "mailto:ubaithsherif22@gmail.com?subject=FootballIQ%20AI%20Demo",
+    demo: "mailto:ubaithsherif22@gmail.com?subject=Unscript%20One%20Demo",
     roadmap: [
-      "Add source attribution cards for every generated claim.",
-      "Expand scouting comparison workflows.",
-      "Introduce match timeline embeddings for retrieval-backed reports."
+      "Add output-side guardrails: hallucination detection and sensitive data masking.",
+      "Introduce a second agent and basic multi-agent handoff via LangGraph.",
+      "Expand evaluation coverage with DeepEval and LangSmith integration."
     ]
   },
   {

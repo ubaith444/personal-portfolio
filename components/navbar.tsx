@@ -60,7 +60,7 @@ export function Navbar() {
             <Moon aria-hidden="true" className="dark:hidden" size={18} />
             <Sun aria-hidden="true" className="hidden dark:block" size={18} />
           </button>
-          <Button className="hidden sm:inline-flex" download="Ubaith-Sherif-Resume.pdf" href="/resume.pdf" variant="secondary">
+          <Button className="hidden sm:inline-flex" download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" variant="secondary">
             <ArrowDownToLine aria-hidden="true" size={16} />
             Resume
           </Button>
