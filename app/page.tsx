@@ -7,8 +7,6 @@ import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/hero-section";
 import { JsonLd } from "@/components/json-ld";
 import { MarqueeRow } from "@/components/marquee-row";
-import { ProfileImage } from "@/components/profile-image";
-import { ScrollReveal } from "@/components/scroll-reveal";
 import { TechIcon } from "@/components/tech-icon";
 import { certifications } from "@/lib/certifications";
 import { education } from "@/lib/education";
