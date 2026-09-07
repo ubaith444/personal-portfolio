@@ -8,13 +8,10 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/ubaith-sherif-4235a5256/",
   roles: [
     "AI Engineer",
-    "Generative AI Engineer",
-    "LLM Engineer",
-    "AI Agent Engineer",
-    "Applied AI Engineer",
-    "Full Stack AI Developer"
+    "Full-Stack Engineer",
+    "Systems Builder"
   ],
-  headline: "Building AI-backed products with clear APIs, data flow, and product behavior.",
+  headline: "Building production AI agents, retrieval systems (RAG), and full-stack web applications.",
   summary:
-    "AI Engineer working across LLM applications, agents, RAG, computer vision, and full-stack automation platforms. I focus on the parts that make model features usable: secure APIs, data pipelines, approvals, auditability, product screens, and deployment architecture."
+    "AI Engineer specializing in LangGraph multi-agent workflows, hybrid vector/BM25 retrieval systems, FastAPI microservices, and modern Next.js web applications. I focus on engineering reliable, evaluated AI systems with structured audit logs, clean data flow, and deployment architecture."
 };

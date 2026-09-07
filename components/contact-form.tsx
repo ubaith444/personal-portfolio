@@ -1,6 +1,5 @@
 "use client";
 
-import { Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
@@ -40,15 +39,15 @@ export function ContactForm() {
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      nextErrors.email = "Enter a valid email address.";
+      nextErrors.email = "Valid email address required.";
     }
 
     if (!form.subject.trim()) {
       nextErrors.subject = "Subject is required.";
     }
 
-    if (form.message.trim().length < 20) {
-      nextErrors.message = "Message should be at least 20 characters.";
+    if (form.message.trim().length < 15) {
+      nextErrors.message = "Message must be at least 15 characters.";
     }
 
     setErrors(nextErrors);
@@ -63,14 +62,14 @@ export function ContactForm() {
     }
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 650));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(false);
     setSuccess(true);
     setForm(initialState);
   }
 
   return (
-    <form className="rounded-[8px] border border-zinc-200 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.045)] dark:border-white/10 dark:bg-white/[0.055] md:p-7" onSubmit={onSubmit}>
+    <form className="rounded-lg border border-slate-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900/60 sm:p-6" onSubmit={onSubmit}>
       <div className="grid gap-4 md:grid-cols-2">
         <Field
           error={errors.fullName}
@@ -81,47 +80,49 @@ export function ContactForm() {
         />
         <Field
           error={errors.email}
-          label="Email"
+          label="Email Address"
           onChange={(value) => updateField("email", value)}
-          placeholder="you@company.com"
+          placeholder="name@company.com"
           type="email"
           value={form.email}
         />
         <Field
-          label="Company"
+          label="Company / Team (Optional)"
           onChange={(value) => updateField("company", value)}
-          placeholder="Company or team"
+          placeholder="Organization"
           value={form.company}
         />
         <Field
           error={errors.subject}
           label="Subject"
           onChange={(value) => updateField("subject", value)}
-          placeholder="Role, project, or collaboration"
+          placeholder="Project scope or inquiry"
           value={form.subject}
         />
       </div>
+
       <label className="mt-4 block">
-        <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">Message</span>
+        <span className="text-xs font-mono font-semibold text-slate-700 dark:text-zinc-300">Message</span>
         <textarea
-          className="mt-2 min-h-36 w-full rounded-[8px] border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-950 outline-none transition placeholder:text-zinc-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 dark:border-white/16 dark:bg-zinc-950 dark:text-white dark:focus:border-blue-300 dark:focus:ring-blue-400/10"
+          className="mt-1.5 min-h-32 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 outline-none transition-colors focus:border-slate-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-slate-100 dark:focus:border-zinc-400"
           onChange={(event) => updateField("message", event.target.value)}
-          placeholder="Share the context, constraints, timeline, and what you need help with."
+          placeholder="Specify goals, technical context, timeline, and deliverables."
           value={form.message}
         />
-        {errors.message ? <span className="mt-1 block text-xs font-medium text-red-600 dark:text-red-300">{errors.message}</span> : null}
+        {errors.message ? <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{errors.message}</span> : null}
       </label>
+
       <button
-        className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] border border-[#111827] bg-[#111827] px-5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:border-blue-600 hover:bg-blue-600 hover:shadow-[0_12px_30px_rgba(37,99,235,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:border-blue-400 dark:bg-blue-400 dark:text-zinc-950 dark:hover:border-blue-300 dark:hover:bg-blue-300"
+        className="mt-4 inline-flex h-9 w-full items-center justify-center rounded-md border border-slate-900 bg-slate-900 px-4 text-xs font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-50 dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
         disabled={loading}
         type="submit"
       >
-        <Send aria-hidden="true" size={16} />
-        {loading ? "Preparing message..." : "Send Message"}
+        {loading ? "Transmitting..." : "Send Message"}
       </button>
+
       {success ? (
-        <p className="mt-4 rounded-[8px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
-          Message drafted successfully. Connect by email or LinkedIn for the fastest response.
+        <p className="mt-3 rounded border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+          Message sent successfully. I will respond to your email shortly.
         </p>
       ) : null}
     </form>
@@ -145,15 +146,15 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{label}</span>
+      <span className="text-xs font-mono font-semibold text-slate-700 dark:text-zinc-300">{label}</span>
       <input
-        className="mt-2 h-12 w-full rounded-[8px] border border-zinc-300 bg-white px-4 text-sm text-zinc-950 outline-none transition placeholder:text-zinc-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 dark:border-white/16 dark:bg-zinc-950 dark:text-white dark:focus:border-blue-300 dark:focus:ring-blue-400/10"
+        className="mt-1.5 h-9 w-full rounded-md border border-slate-300 bg-white px-3 text-xs text-slate-900 outline-none transition-colors focus:border-slate-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-slate-100 dark:focus:border-zinc-400"
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
         type={type}
         value={value}
       />
-      {error ? <span className="mt-1 block text-xs font-medium text-red-600 dark:text-red-300">{error}</span> : null}
+      {error ? <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{error}</span> : null}
     </label>
   );
 }

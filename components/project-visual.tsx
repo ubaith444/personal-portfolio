@@ -1,10 +1,34 @@
-const coverThemes: Record<string, { label: string; nodes: string[]; bars: number[] }> = {
-  agents: { label: "Agent runtime", nodes: ["Plan", "Tools", "Review", "Audit"], bars: [64, 42, 88, 72] },
-  workflow: { label: "LangGraph flow", nodes: ["Input", "Node", "Edge", "Checkpoint"], bars: [42, 76, 58, 90] },
-  rag: { label: "Retrieval layer", nodes: ["Docs", "Chunks", "Vectors", "Sources"], bars: [72, 54, 92, 68] },
-  fastapi: { label: "API boundary", nodes: ["Schema", "Queue", "Stream", "Logs"], bars: [58, 84, 48, 76] },
-  systems: { label: "Scale map", nodes: ["Gateway", "Workers", "Cache", "Eval"], bars: [52, 68, 86, 62] },
-  enterprise: { label: "Automation OS", nodes: ["Policy", "Webhook", "Approval", "Report"], bars: [80, 46, 74, 88] }
+const coverThemes: Record<string, { label: string; nodes: string[]; codeSnippet: string }> = {
+  agents: {
+    label: "AGENT_EXECUTION_GRAPH",
+    nodes: ["State", "Planner", "Tools", "Human_Review"],
+    codeSnippet: "graph.add_node('review', approval_step)"
+  },
+  workflow: {
+    label: "LANGGRAPH_STATE_MACHINE",
+    nodes: ["Input", "Node", "Edge", "Checkpoint"],
+    codeSnippet: "checkpointer = MemorySaver()"
+  },
+  rag: {
+    label: "HYBRID_RETRIEVAL_PIPELINE",
+    nodes: ["BM25", "Qdrant_Vector", "Reranker", "Context"],
+    codeSnippet: "score = 0.5 * bm25 + 0.5 * dense"
+  },
+  fastapi: {
+    label: "API_SERVICE_CONTRACT",
+    nodes: ["Pydantic", "FastAPI", "Queue", "Stream"],
+    codeSnippet: "async def generate(req: Request):"
+  },
+  systems: {
+    label: "SYSTEM_ARCHITECTURE",
+    nodes: ["Gateway", "Workers", "PostgreSQL", "Ragas"],
+    codeSnippet: "eval_score = ragas.evaluate(dataset)"
+  },
+  enterprise: {
+    label: "AUTOMATION_PLATFORM",
+    nodes: ["Webhook", "RBAC", "Audit_Trail", "Report"],
+    codeSnippet: "verify_signature(req.headers)"
+  }
 };
 
 export function BlogCover({ type }: { type: string }) {
@@ -12,55 +36,39 @@ export function BlogCover({ type }: { type: string }) {
 
   return (
     <div
-      aria-label={`${theme.label} technical article cover illustration`}
-      className="relative aspect-[16/9] overflow-hidden rounded-[8px] bg-zinc-950 p-4 text-white"
+      aria-label={`${theme.label} architecture diagram`}
+      className="relative aspect-[16/9] overflow-hidden rounded-lg border border-slate-200 bg-slate-900 p-5 text-slate-100 dark:border-zinc-800"
       role="img"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(59,130,246,0.30),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(124,58,237,0.22),transparent_35%),linear-gradient(135deg,rgba(15,23,42,0.3),rgba(2,6,23,0.9))]" />
-      <div className="grid-overlay absolute inset-0 opacity-20" />
-      <div className="relative grid h-full grid-cols-[1.05fr_0.95fr] gap-3">
-        <div className="rounded-[8px] border border-white/10 bg-white/8 p-4 backdrop-blur">
-          <p className="text-xs uppercase tracking-[0.18em] text-blue-200">{theme.label}</p>
-          <svg className="mt-5 h-[58%] w-full" viewBox="0 0 260 150" aria-hidden="true">
-            <path d="M35 76h64M126 38h62M126 112h62M99 76l27-38M99 76l27 36" stroke="#60a5fa" strokeLinecap="round" strokeWidth="4" />
-            <path d="M188 38l38 38-38 36" fill="none" stroke="#a78bfa" strokeLinecap="round" strokeWidth="4" />
-            {[
-              [35, 76],
-              [99, 76],
-              [126, 38],
-              [126, 112],
-              [188, 38],
-              [188, 112],
-              [226, 76]
-            ].map(([cx, cy], index) => (
-              <circle className="pulse-soft" cx={cx} cy={cy} fill={index % 2 ? "#60a5fa" : "#a78bfa"} key={`${cx}-${cy}`} r="10" />
-            ))}
-          </svg>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {theme.nodes.map((node) => (
-              <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-blue-100" key={node}>
-                {node}
-              </span>
-            ))}
-          </div>
+      <div className="flex h-full flex-col justify-between">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <span className="font-mono text-xs text-blue-400">{"// "}{theme.label}</span>
+          <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-[10px] text-slate-400">SPEC_DIAGRAM</span>
         </div>
-        <div className="grid gap-3">
-          <div className="rounded-[8px] border border-white/10 bg-black/22 p-3">
-            <div className="flex h-28 items-end gap-2">
-              {theme.bars.map((height, index) => (
-                <span
-                  className="flex-1 rounded-t bg-gradient-to-t from-blue-500 to-purple-300"
-                  key={index}
-                  style={{ height: `${height}%` }}
-                />
+
+        <div className="my-4 grid grid-cols-2 gap-4">
+          <div className="space-y-2 rounded border border-slate-800 bg-slate-950 p-3">
+            <p className="font-mono text-[11px] text-slate-400">{"// WORKFLOW_NODES"}</p>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {theme.nodes.map((node) => (
+                <span key={node} className="rounded border border-slate-700 bg-slate-900 px-2 py-1 font-mono text-[11px] text-slate-200">
+                  {node}
+                </span>
               ))}
             </div>
           </div>
-          <div className="rounded-[8px] border border-white/10 bg-white/8 p-3">
-            <span className="block h-2 w-20 rounded bg-blue-300" />
-            <span className="mt-3 block h-2 w-full rounded bg-white/20" />
-            <span className="mt-2 block h-2 w-2/3 rounded bg-purple-300/70" />
+
+          <div className="flex flex-col justify-between rounded border border-slate-800 bg-slate-950 p-3">
+            <p className="font-mono text-[11px] text-slate-400">{"// CODE_SAMPLE"}</p>
+            <pre className="overflow-x-auto font-mono text-[11px] text-emerald-400">
+              <code>{theme.codeSnippet}</code>
+            </pre>
           </div>
+        </div>
+
+        <div className="flex items-center justify-between text-[11px] font-mono text-slate-500">
+          <span>STATUS: EVALUATED</span>
+          <span>COMPILATION: OK</span>
         </div>
       </div>
     </div>

@@ -1,860 +1,611 @@
-import {
-  ArrowRight,
-  BrainCircuit,
-  CheckCircle2,
-  Cloud,
-  Cpu,
-  Database,
-  ExternalLink,
-  Github,
-  Layers,
-  Linkedin,
-  Mail,
-  Network,
-  ShieldCheck,
-  Terminal
-} from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { CertOrgLogo } from "@/components/cert-org-logo";
+import { ContactForm } from "@/components/contact-form";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { Footer } from "@/components/footer";
+import { HeroSection } from "@/components/hero-section";
 import { JsonLd } from "@/components/json-ld";
-import { BlogCover } from "@/components/project-visual";
-import { Reveal, Magnetic } from "@/components/motion";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { blogPosts } from "@/lib/blog";
+import { MarqueeRow } from "@/components/marquee-row";
+import { ProfileImage } from "@/components/profile-image";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { TechIcon } from "@/components/tech-icon";
 import { certifications } from "@/lib/certifications";
 import { education } from "@/lib/education";
 import { internships } from "@/lib/experience";
+import { faqs } from "@/lib/faq";
 import { profile } from "@/lib/profile";
 import { projects } from "@/lib/projects";
+import { verifiedArticles } from "@/lib/research-notes";
 import { siteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Ubaith Sherif - AI Engineer Portfolio",
+  title: "Ubaith Sherif — AI Engineer & Full-Stack Developer",
   description:
-    "Ubaith Sherif is an AI Engineer building production-ready AI agents, RAG systems, automation platforms, and full-stack AI products with LangGraph, FastAPI, Next.js, PostgreSQL, vector databases, OpenAI, Claude, and LangChain.",
-  alternates: {
-    canonical: siteUrl("/")
-  },
+    "Ubaith Sherif is an AI Engineer building LLM applications, multi-agent workflows, RAG systems, FastAPI microservices, and production Next.js applications.",
+  alternates: { canonical: siteUrl("/") },
   openGraph: {
-    title: "Ubaith Sherif - AI Engineer Portfolio",
-    description:
-      "AI Engineer portfolio with projects in AI agents, RAG, automation platforms, football analytics, natural language analytics, and classroom AI.",
+    title: "Ubaith Sherif — AI Engineer & Full-Stack Developer",
+    description: "AI Engineering work: agents, RAG, LangGraph orchestration, computer vision, FastAPI, and full-stack development.",
     url: siteUrl("/"),
     type: "profile",
-    images: [
-      {
-        url: siteUrl("/visuals/ai-systems-command-center.png"),
-        width: 1200,
-        height: 675,
-        alt: "Ubaith Sherif AI Engineer portfolio preview"
-      }
-    ]
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Ubaith Sherif - AI Engineer Portfolio",
-    description:
-      "AI Engineer building AI agents, RAG systems, automation platforms, and full-stack AI products.",
-    images: [siteUrl("/visuals/ai-systems-command-center.png")]
-  }
 };
 
-const homeProjectStories: Record<string, { summary: string; points: string[] }> = {
-  "multi-agent-business-automation-platform": {
-    summary:
-      "A workflow platform for teams that need approvals, traceability, and clear handoffs before automation can be trusted.",
-    points: ["Human review where it matters", "Clear operating views for teams", "Audit trails that explain what happened"]
-  },
-  "unscript-one": {
-    summary:
-      "An enterprise AI workspace that unifies RAG, AI Agents, MCP, Guardrails, and LLM Evaluation into one production-oriented platform.",
-    points: ["Hybrid RAG with citations and reranking", "LangGraph agents with real GitHub MCP", "Automated Ragas eval on every deploy"]
-  },
-  "insightai-agent": {
-    summary:
-      "An analytics concept for teams that want faster answers without losing the query logic behind them.",
-    points: ["Question-to-query flow", "Reviewable analysis for business users", "Plain explanations before decisions"]
-  },
-  "ai-teacher-robot": {
-    summary:
-      "A classroom assistant that combines attendance, speech interaction, and learning support in a teacher-led workflow.",
-    points: ["Attendance and classroom support", "Teacher-centered assistance", "Edge-device and backend thinking"]
-  }
-};
-
-const homeArticlePreviews: Record<string, { category: string; title: string; excerpt: string }> = {
-  "building-production-ai-agents": {
-    category: "Product Engineering",
-    title: "Building Model Features People Can Trust",
-    excerpt:
-      "How to move from a demo to software with clear boundaries, review points, and behavior a team can explain."
-  },
-  "langgraph-in-production": {
-    category: "System Design",
-    title: "Designing Workflows That Can Be Run",
-    excerpt:
-      "Notes on making model-driven workflows visible, recoverable, and understandable when users depend on them."
-  },
-  "enterprise-rag-architecture": {
-    category: "Information Systems",
-    title: "Making Knowledge Features Trustworthy",
-    excerpt:
-      "A practical look at grounding answers in useful source material, clean content, evaluation, and transparent product design."
-  },
-  "fastapi-for-ai-engineers": {
-    category: "Backend Engineering",
-    title: "API Design for Intelligent Features",
-    excerpt:
-      "Why the service layer matters when model behavior needs validation, observability, and a stable product contract."
-  },
-  "scaling-multi-agent-systems": {
-    category: "Reliability",
-    title: "Scaling Coordinated AI Workflows",
-    excerpt:
-      "How to think about queues, state, review, recovery, and monitoring when a workflow grows past one interaction."
-  },
-  "designing-ai-automation-platforms": {
-    category: "Product Design",
-    title: "Designing Automation People Actually Use",
-    excerpt:
-      "A product-minded approach to approvals, timelines, controls, and interfaces that make automation feel dependable."
-  }
-};
-
-const skillGroups = [
-  {
-    title: "Programming Languages",
-    icon: Terminal,
-    skills: ["Python", "JavaScript", "TypeScript", "SQL"]
-  },
-  {
-    title: "Artificial Intelligence",
-    icon: BrainCircuit,
-    skills: ["Machine Learning", "Generative AI", "Large Language Models (LLMs)", "Retrieval-Augmented Generation (RAG)", "AI Agents", "Prompt Engineering", "Natural Language Processing (NLP)", "Computer Vision"]
-  },
-  {
-    title: "AI Engineering",
-    icon: Cpu,
-    skills: ["LangChain", "LangGraph", "Model Context Protocol (MCP)", "LLMOps", "AI Guardrails", "RAG Evaluation (Ragas)", "Vector Databases", "Embeddings", "Hybrid Search", "Semantic Search"]
-  },
-  {
-    title: "Frameworks & Libraries",
-    icon: Layers,
-    skills: ["FastAPI", "Next.js", "React", "TensorFlow", "Scikit-learn", "Hugging Face Transformers", "OpenCV"]
-  },
-  {
-    title: "Databases & Storage",
-    icon: Database,
-    skills: ["PostgreSQL", "MongoDB", "Qdrant", "pgvector", "Supabase"]
-  },
-  {
-    title: "Cloud & DevOps",
-    icon: Cloud,
-    skills: ["Docker", "Git", "GitHub", "GitHub Actions", "Vercel", "Railway", "Render"]
-  },
-  {
-    title: "APIs & Integrations",
-    icon: Network,
-    skills: ["REST APIs", "WebSockets", "GitHub MCP", "Google Gemini API", "Groq API"]
-  }
+const stackCategories = [
+  { label: "AI / ML & Computer Vision",    items: ["Python", "PyTorch", "TensorFlow", "OpenCV", "scikit-learn"] },
+  { label: "Generative AI & Agents",       items: ["LangGraph", "LangChain", "RAG", "MCP", "Ragas", "Qdrant", "OpenAI", "Google Gemini"] },
+  { label: "Backend & Distributed",        items: ["FastAPI", "Node.js", "PostgreSQL", "MongoDB", "Redis", "Docker"] },
+  { label: "Frontend & Web",               items: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS"] },
+  { label: "Cloud & Infrastructure",       items: ["Docker", "GitHub", "Vercel", "AWS", "Supabase"] },
 ];
 
-const whatIBuild = [
-  "AI agent workflows with approvals, state, tool calls, and audit trails.",
-  "RAG systems with ingestion, retrieval, metadata, vector databases, and source-aware answers.",
-  "Automation platforms that connect APIs, webhooks, queues, product screens, and human review.",
-  "Full-stack AI products using FastAPI, Next.js, PostgreSQL, OpenAI, Claude, LangGraph, and LangChain."
-];
+const engineeringProjects = projects.filter((p) => p.slug !== "ai-teacher-robot");
+const featuredProject = engineeringProjects.find((p) => p.featured) ?? engineeringProjects[0];
+const otherProjects = engineeringProjects.filter((p) => p.slug !== featuredProject.slug);
 
-const bestFitRoles = [
-  "AI Engineer",
-  "Generative AI Engineer",
-  "LLM Engineer",
-  "AI Agent Engineer",
-  "RAG Developer",
-  "Full Stack AI Developer",
-  "AI Automation Engineer"
-];
+const certs2026 = certifications.filter((c) => c.issueDate.includes("2026"));
+const certs2025 = certifications.filter((c) => c.issueDate.includes("2025"));
 
-const proofOfWork = [
-  "Multi-Agent Business Automation Platform: workflow orchestration, approval gates, RBAC, audit logging, and webhooks.",
-  "Unscript One: enterprise AI workspace with hybrid RAG, LangGraph agents, GitHub MCP, guardrails, and Ragas evaluation.",
-  "InsightAI Agent: natural language analytics with query review, chart generation, and readable explanations.",
-  "AI Teacher Robot: classroom attendance, speech interaction, retrieval, computer vision, and device integration."
-];
-
-const homepageFaq = [
-  {
-    question: "Who is Ubaith Sherif?",
-    answer:
-      "Ubaith Sherif is an AI Engineer from Coimbatore, India, focused on AI agents, RAG systems, automation platforms, analytics products, and full-stack AI applications."
-  },
-  {
-    question: "What does Ubaith Sherif build?",
-    answer:
-      "He builds AI agents, retrieval systems, workflow automation platforms, analytics tools, classroom AI projects, and backend-heavy full-stack products."
-  },
-  {
-    question: "Is Ubaith Sherif an AI Engineer?",
-    answer:
-      "Yes. Ubaith positions himself as an AI Engineer, Generative AI Engineer, LLM Engineer, AI Agent Engineer, RAG Developer, and Full Stack AI Developer."
-  },
-  {
-    question: "What AI projects has Ubaith Sherif built?",
-    answer:
-      "His flagship projects include Multi-Agent Business Automation Platform, Unscript One (AI-Native Enterprise Workspace), InsightAI Agent, and AI Teacher Robot."
-  },
-  {
-    question: "What is Ubaith Sherif's tech stack?",
-    answer:
-      "His stack includes LangGraph, LangChain, FastAPI, Next.js, React, TypeScript, PostgreSQL, Redis, vector databases, OpenAI, Claude, Python, Docker, and GitHub workflows."
-  },
-  {
-    question: "Does Ubaith Sherif build AI agents and RAG systems?",
-    answer:
-      "Yes. His portfolio includes agent workflow projects, retrieval-backed analytics, knowledge retrieval, vector databases, approval flows, and source-aware answers."
-  },
-  {
-    question: "How can I contact Ubaith Sherif?",
-    answer: `You can contact Ubaith Sherif by email at ${profile.email}, through LinkedIn, or through the contact page on this portfolio.`
-  }
-];
-
-export default function Home() {
-  const homepageSchema = [
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      "@id": siteUrl("/#profile-page"),
-      url: siteUrl("/"),
-      name: `${profile.name} - AI Engineer Portfolio`,
-      description:
-        "Profile page for Ubaith Sherif, an AI Engineer building AI agents, RAG systems, automation platforms, and full-stack AI products.",
-      mainEntity: {
-        "@type": "Person",
-        "@id": siteUrl("/#person"),
-        name: profile.name,
-        jobTitle: "AI Engineer",
-        email: profile.email,
-        telephone: profile.phone,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Coimbatore",
-          addressCountry: "IN"
-        },
-        sameAs: [profile.github, profile.linkedin],
-        knowsAbout: [
-          "AI Engineer",
-          "Generative AI",
-          "LLM Engineering",
-          "AI Agents",
-          "RAG",
-          "LangGraph",
-          "FastAPI",
-          "Next.js",
-          "PostgreSQL",
-          "Vector Databases",
-          "OpenAI",
-          "Claude",
-          "LangChain"
-        ]
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "@id": siteUrl("/#faq-schema"),
-      mainEntity: homepageFaq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer
-        }
-      }))
-    }
-  ];
+export default function HomePage() {
+  const teacherRobot = education.combinedTeacherRobotProject;
 
   return (
-    <main id="home" className="overflow-hidden pt-16">
-      <JsonLd data={homepageSchema} />
-      <section className="mesh-surface relative border-b border-zinc-200/80 dark:border-white/10">
-        <div className="grid-overlay absolute inset-0 opacity-35" aria-hidden="true" />
-        <div className="relative mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-16 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.04fr_0.96fr] lg:px-8">
-          <Reveal>
-            <div>
-              <p className="gradient-text mb-5 text-sm font-semibold uppercase tracking-[0.22em]">
-                AI Engineer | Generative AI | Full-Stack AI Developer
-              </p>
-              <h1 className="typing-cursor text-balance text-5xl font-semibold leading-[1.02] text-zinc-950 dark:text-white sm:text-6xl lg:text-7xl">
-                I turn rough AI ideas into software that holds up in use.
-              </h1>
-              <p className="mt-7 max-w-2xl text-pretty text-lg leading-8 text-slate-600 dark:text-zinc-300">
-                I am Ubaith Sherif, an AI Engineer building production-ready AI agents, RAG systems, automation
-                platforms, and full-stack AI products. I work across APIs, data flows, model integrations, and
-                interfaces teams can reason about, with attention to permissions, failure states, evaluation, and handoffs.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Magnetic>
-                  <Button href="#projects">
-                    View My Projects
-                    <ArrowRight aria-hidden="true" size={16} />
-                  </Button>
-                </Magnetic>
-                <Magnetic>
-                  <Button download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" variant="secondary">
-                    Download Resume
-                  </Button>
-                </Magnetic>
-                <div className="flex gap-2 sm:ml-2">
-                  <IconLink href={profile.github} icon={<Github aria-hidden="true" size={18} />} label="GitHub" />
-                  <IconLink href={profile.linkedin} icon={<Linkedin aria-hidden="true" size={18} />} label="LinkedIn" />
-                  <IconLink href={`mailto:${profile.email}`} icon={<Mail aria-hidden="true" size={18} />} label="Email" />
-                </div>
+    <main id="main-content">
+      <JsonLd />
+
+      {/* ══════════════════════════════════════════════════════
+          §01 HERO — Ultra-premium animated interactive Hero
+      ══════════════════════════════════════════════════════ */}
+      <HeroSection />
+
+
+      {/* ══════════════════════════════════════════════════════
+          §01b ABOUT — Dark inverted band
+          Style: full-width dark background, oversized quote,
+                 two-column facts grid
+      ══════════════════════════════════════════════════════ */}
+      <section id="about" className="about-band py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+
+          {/* Oversize label */}
+          <p className="font-mono text-[10px] font-semibold tracking-[0.22em] uppercase about-accent mb-6">
+            01b — About
+          </p>
+
+          {/* Pull-quote hero text */}
+          <h2
+            className="text-[clamp(1.75rem,4vw,3.25rem)] font-bold leading-[1.15] max-w-[22ch]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            I deconstruct systems to understand how they{" "}
+            <span className="about-accent">actually</span> work, then rebuild
+            them into things that are useful.
+          </h2>
+
+          {/* 2×2 fact grid */}
+          <div className="mt-14 grid gap-px sm:grid-cols-2 lg:grid-cols-4 border border-white/10 rounded-2xl overflow-hidden">
+            {[
+              { n: "01", title: "How I think",          body: "Data flow over isolated functions. Edge cases over happy paths. Failures are just lessons I haven't documented yet." },
+              { n: "02", title: "What I build",         body: "End-to-end AI systems — multi-agent workflows, retrieval pipelines, computer vision, and full-stack products around them." },
+              { n: "03", title: "Where I'm heading",    body: "From someone who solves isolated problems to an engineer who can architect, implement, and deploy complete AI products." },
+              { n: "04", title: "Outside the terminal", body: "Football, competitive gaming, and visual design. Same instinct every time: read the pattern, make the call." },
+            ].map((row) => (
+              <div
+                key={row.n}
+                className="flex flex-col gap-3 p-6 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+              >
+                <span className="font-mono text-[10px] font-bold about-accent">{row.n}</span>
+                <p className="text-[15px] font-semibold" style={{ fontFamily: "'Syne', sans-serif" }}>{row.title}</p>
+                <p className="text-[13px] leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>{row.body}</p>
               </div>
-              {/* Stats bar */}
-              <div className="mt-8 flex flex-wrap gap-3">
-                {[
-                  { value: "15", label: "Projects Built" },
-                  { value: "7", label: "Skill Areas" },
-                  { value: "1", label: "Published Research" }
-                ].map((stat) => (
-                  <div
-                    className="stat-pill flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 text-sm shadow-sm dark:border-white/10 dark:bg-white/[0.06]"
-                    key={stat.label}
-                  >
-                    <span className="text-lg font-bold text-blue-600 dark:text-blue-300">{stat.value}</span>
-                    <span className="text-zinc-600 dark:text-zinc-300">{stat.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <AbstractEditorialVisual />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="what-i-build-heading">
-        <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
-          <Reveal>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">What I Build</p>
-              <h2 id="what-i-build-heading" className="mt-4 text-3xl font-semibold text-zinc-950 dark:text-white md:text-5xl">
-                Model-backed products with clear system boundaries.
-              </h2>
-              <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-zinc-300">
-                Recruiters and AI search engines should be able to understand the work quickly: Ubaith builds AI agents,
-                RAG products, automation platforms, analytics tools, and full-stack AI applications.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {whatIBuild.map((item) => (
-                <Card className="p-5" key={item}>
-                  <div className="flex gap-3">
-                    <ShieldCheck aria-hidden="true" className="mt-1 shrink-0 text-blue-600 dark:text-blue-300" size={18} />
-                    <p className="leading-7 text-slate-600 dark:text-zinc-300">{item}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" id="about">
-        <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-          <Reveal>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">About</p>
-              <h2 className="mt-4 text-3xl font-semibold text-zinc-950 dark:text-white md:text-5xl">
-                I like the hard middle between a model demo and a working product.
-              </h2>
-            </div>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <div className="space-y-6 text-lg leading-9 text-slate-600 dark:text-zinc-300">
-              <p>
-                Ubaith treats AI engineering like product engineering: understand the workflow, define the contract,
-                make the system observable, and keep the user experience simple enough to operate under pressure.
-              </p>
-              <p>
-                His strongest work sits in the practical layer: business operations, natural-language analytics,
-                classroom tools, and football analysis. The goal is not to make AI feel magical. It is to make the
-                software explainable, maintainable, and worth using.
-              </p>
-              <Button href="/contact" variant="secondary">
-                Connect with Ubaith
-                <ArrowRight aria-hidden="true" size={16} />
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="border-y border-zinc-200 bg-[#f3f4f6]/70 py-20 dark:border-white/10 dark:bg-white/[0.025]" id="projects">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Featured Projects" title="Selected work with the constraints left in.">
-            Four projects that show how Ubaith handles product shape, data flow, review, and the unglamorous details.
-          </SectionHeading>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {projects.map((project, index) => {
-              const Icon = project.icon;
-              const story = homeProjectStories[project.slug];
-              return (
-                <Reveal delay={index * 0.04} key={project.slug}>
-                  <Card className="group h-full p-6 border-glow-hover md:p-7">
-                    <div className="flex h-full flex-col">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <div className="mb-4 flex flex-wrap gap-2">
-                            <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-200">{project.industry}</span>
-                          </div>
-                          <h3 className="mt-3 text-2xl font-semibold text-zinc-950 dark:text-white">{project.title}</h3>
-                        </div>
-                        <span className="grid size-11 shrink-0 place-items-center rounded-[8px] bg-zinc-950 text-white dark:bg-white dark:text-zinc-950">
-                          <Icon aria-hidden="true" size={20} />
-                        </span>
-                      </div>
-                      <p className="mt-4 text-pretty leading-7 text-slate-600 dark:text-zinc-300">{story.summary}</p>
-                      <div className="mt-5 rounded-[8px] border border-zinc-200 bg-[#f9fafb] p-4 dark:border-white/10 dark:bg-white/[0.045]">
-                        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">What it demonstrates</p>
-                        {story.points.map((item) => (
-                          <div className="flex items-center gap-2 py-1 text-sm text-slate-600 dark:text-zinc-300" key={item}>
-                            <span className="size-1.5 rounded-full bg-blue-600 dark:bg-blue-300" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-auto pt-7">
-                        <Button href={`/projects/${project.slug}`} variant="secondary">
-                          View Case Study
-                          <ArrowRight aria-hidden="true" size={16} />
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                </Reveal>
-              );
-            })}
+            ))}
           </div>
+
+          {/* Footer quote */}
+          <p className="mt-10 font-mono text-[11px] font-semibold tracking-wide about-accent">
+            &ldquo;Engineering at the intersection of AI models, clean architecture, and real-world products.&rdquo;
+          </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" id="skills">
-        <SectionHeading eyebrow="Skills" title="Technical Strengths">
-          A clean summary of the technologies and engineering areas represented across the portfolio.
-        </SectionHeading>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {skillGroups.map((group, index) => {
-            const Icon = group.icon;
-            return (
-              <Reveal delay={index * 0.04} key={group.title}>
-                <Card className="group flex h-full flex-col p-6 border-glow-hover">
-                  <div className="mb-5 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="shimmer-on-hover grid size-10 place-items-center rounded-[8px] border border-blue-100 bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white">
-                        <Icon aria-hidden="true" size={20} />
-                      </span>
-                      <h3 className="text-lg font-semibold text-zinc-950 dark:text-white">{group.title}</h3>
-                    </div>
-                    <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-semibold text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
-                      {group.skills.length}
-                    </span>
+
+      {/* ══════════════════════════════════════════════════════
+          §02 PROJECTS — Dark hero banner + ghost-num hover cards
+      ══════════════════════════════════════════════════════ */}
+      <section id="projects" className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-12">
+            <div>
+              <span className="section-label">02 — Engineering Works</span>
+              <h2 className="text-section-display text-[--foreground] mt-1">Selected Projects</h2>
+            </div>
+            <a href={profile.github} target="_blank" rel="noreferrer"
+              className="shrink-0 font-mono text-[12px] font-semibold text-[--muted-foreground] hover:text-[--accent] transition-colors">
+              All repositories <span className="arrow-shift">↗</span>
+            </a>
+          </div>
+
+          {/* Featured — dark cinematic banner */}
+          {featuredProject && (
+            <div className="project-featured-banner mb-10">
+              <div className="relative z-10">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="pfb-label font-mono text-[11px] font-bold tracking-widest uppercase mb-1">
+                      ★ Featured · {featuredProject.industry} · {featuredProject.status}
+                    </p>
+                    <h3
+                      className="text-[clamp(1.5rem,3.5vw,2.5rem)] font-bold leading-tight"
+                      style={{ fontFamily: "'Syne', sans-serif" }}
+                    >
+                      {featuredProject.title}
+                    </h3>
+                    <p className="mt-1.5 text-[14px] pfb-muted">{featuredProject.subtitle}</p>
                   </div>
-                  <div className="mt-auto flex min-w-0 max-w-full flex-wrap gap-2 pt-2">
-                    {group.skills.map((skill) => (
-                      <span
-                        className="skill-chip rounded-full border border-zinc-200 bg-[#f9fafb] px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:bg-blue-50/50 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200 dark:hover:border-blue-400/40 dark:hover:bg-blue-400/10"
-                        key={skill}
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                  <div className="flex shrink-0 items-center gap-3 mt-2 sm:mt-0">
+                    {featuredProject.github && (
+                      <a href={featuredProject.github} target="_blank" rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 font-mono text-[11px] font-semibold text-white/80 hover:bg-white/10 transition-colors">
+                        GitHub ↗
+                      </a>
+                    )}
+                    <Link href={`/projects/${featuredProject.slug}`}
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[--accent] font-mono text-[11px] font-bold text-white hover:opacity-90 transition-opacity">
+                      Technical Spec →
+                    </Link>
                   </div>
-                </Card>
-              </Reveal>
-            );
-          })}
-        </div>
-      </section>
+                </div>
 
-      <section className="border-y border-zinc-200 bg-[#f3f4f6]/70 py-20 dark:border-white/10 dark:bg-white/[0.025]" aria-labelledby="fit-proof-heading">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <Reveal>
-            <Card className="h-full p-6 md:p-7">
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">Best Fit Roles</p>
-              <h2 id="fit-proof-heading" className="mt-4 text-3xl font-semibold text-zinc-950 dark:text-white">Roles Ubaith fits clearly.</h2>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {bestFitRoles.map((role) => (
-                  <span className="rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200" key={role}>
-                    {role}
-                  </span>
-                ))}
-              </div>
-            </Card>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <Card className="h-full p-6 md:p-7">
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">Proof of Work</p>
-              <h2 className="mt-4 text-3xl font-semibold text-zinc-950 dark:text-white">Four flagship project signals.</h2>
-              <ul className="mt-6 space-y-3">
-                {proofOfWork.map((item) => (
-                  <li className="flex gap-3 leading-7 text-slate-600 dark:text-zinc-300" key={item}>
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-blue-600 dark:bg-blue-300" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </Reveal>
-        </div>
-      </section>
+                <p className="mt-6 text-[14px] leading-relaxed pfb-muted max-w-[66ch]">{featuredProject.description}</p>
 
-      <section className="border-y border-zinc-200 bg-zinc-950 py-20 text-white dark:border-white/10" id="experience">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Experience" title="Hands-on AI and data work." tone="inverted">
-            Resume-backed experience across machine learning, data workflows, and application development.
-          </SectionHeading>
-          <div className="relative space-y-6 before:absolute before:left-4 before:top-0 before:h-full before:w-px before:bg-white/12 md:before:left-1/2">
-            {internships.map((item, index) => (
-              <Reveal delay={index * 0.06} key={item.company}>
-                <div className={`relative grid gap-6 md:grid-cols-2 ${index % 2 ? "" : "md:[&>div:first-child]:col-start-2"}`}>
-                  <span className="dot-radiate absolute left-2 top-6 z-10 size-4 rounded-full border-4 border-zinc-950 bg-blue-300 md:left-[calc(50%-8px)]" />
-                  <div className="rounded-[8px] border border-white/12 bg-white/[0.055] p-6">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">{item.duration}</p>
-                    <h3 className="mt-3 text-2xl font-semibold">{item.role}</h3>
-                    <p className="mt-1 text-zinc-300">{item.company}</p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {item.technologies.map((tech) => (
-                        <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-blue-100" key={tech}>{tech}</span>
+                <div className="mt-8 grid gap-6 sm:grid-cols-2 border-t pfb-border pt-6">
+                  <div>
+                    <p className="pfb-label font-mono text-[10px] uppercase tracking-widest mb-3">Architecture</p>
+                    <ul className="space-y-2">
+                      {featuredProject.architecture.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-[13px] pfb-muted">
+                          <span className="shrink-0 font-mono text-[10px] font-bold pfb-label pt-0.5">{String(i+1).padStart(2,"0")}.</span>{item}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
-                  <div className="rounded-[8px] border border-white/12 bg-white/[0.04] p-6 md:col-start-auto">
-                    <h4 className="font-semibold">Responsibilities and outcomes</h4>
-                    <ul className="mt-4 space-y-3 text-sm leading-6 text-zinc-300">
-                      {[...item.responsibilities, ...item.achievements].map((point) => (
-                        <li className="flex gap-3" key={point}>
-                          <CheckCircle2 className="mt-0.5 shrink-0 text-blue-300" size={16} />
-                          <span>{point}</span>
+                  <div>
+                    <p className="pfb-label font-mono text-[10px] uppercase tracking-widest mb-3">Capabilities</p>
+                    <ul className="space-y-2">
+                      {featuredProject.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-[13px] pfb-muted">
+                          <span className="shrink-0 pfb-label font-bold">✓</span>{f}
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" id="education">
-        <SectionHeading eyebrow="Education" title="Academic base in AI and Data Science.">
-          Coursework and final-year work shaped around machine learning, data systems, computer vision, NLP, and software delivery.
-        </SectionHeading>
-
-        {/* Degree Card */}
-        <Card className="grid gap-8 p-6 md:grid-cols-[0.82fr_1.18fr] md:p-8">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">{education.duration}</p>
-            <h3 className="mt-4 text-3xl font-semibold text-zinc-950 dark:text-white">{education.degree}</h3>
-            <p className="mt-2 text-xl text-zinc-700 dark:text-zinc-200">{education.field}</p>
-            <p className="mt-4 text-zinc-600 dark:text-zinc-300">{education.institution}, {education.location}</p>
-          </div>
-          <div className="space-y-5">
-            <p className="leading-8 text-zinc-600 dark:text-zinc-300">{education.focus}</p>
-            <p className="leading-8 text-zinc-600 dark:text-zinc-300">{education.finalYearWork}</p>
-            <div className="flex flex-wrap gap-2">
-              {education.coursework.map((course) => (
-                <span className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm text-zinc-700 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200" key={course}>{course}</span>
-              ))}
-            </div>
-          </div>
-        </Card>
-
-        {/* Academic Highlights */}
-        <Reveal delay={0.06}>
-          <div className="mt-6">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">Academic Highlights</p>
-            <Card className="p-6 md:p-8">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-200">
-                    {education.publication.category}
-                  </span>
-                  <span className="badge-published-glow rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">
-                    {education.publication.status}
-                  </span>
-                </div>
-                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Published Research Paper</span>
-              </div>
-              <h3 className="mt-4 text-xl font-semibold leading-8 text-zinc-950 dark:text-white md:text-2xl">
-                {education.publication.title}
-              </h3>
-              <p className="mt-2 text-sm font-semibold text-blue-600 dark:text-blue-300">
-                {education.publication.journal}
-              </p>
-              <p className="mt-4 leading-7 text-slate-600 dark:text-zinc-300">
-                {education.publication.description}
-              </p>
-              <div className="mt-6 rounded-[8px] border border-zinc-200 bg-[#f9fafb] p-5 dark:border-white/10 dark:bg-white/[0.045]">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">Research Focus Areas</p>
-                <div className="flex flex-wrap gap-2">
-                  {education.publication.researchAreas.map((area) => (
-                    <span
-                      className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 dark:border-white/10 dark:bg-white/8 dark:text-zinc-200"
-                      key={area}
-                    >
-                      <span className="size-1.5 rounded-full bg-blue-600 dark:bg-blue-300" />
-                      {area}
-                    </span>
+                <div className="mt-6 border-t pfb-border pt-4 flex flex-wrap gap-1.5">
+                  {featuredProject.tags.map((tag) => (
+                    <span key={tag} className="pfb-chip"><TechIcon name={tag} size={11} /><span>{tag}</span></span>
                   ))}
                 </div>
               </div>
-            </Card>
-          </div>
-        </Reveal>
-      </section>
+            </div>
+          )}
 
-      <section className="border-y border-zinc-200 bg-[#f3f4f6]/70 py-20 dark:border-white/10 dark:bg-white/[0.025]" id="certifications">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Certificates" title="Relevant credentials, kept simple.">
-            Short, verifiable cards for the certifications most connected to the work shown here.
-          </SectionHeading>          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {certifications.map((certification, index) => (
-              <Reveal delay={index * 0.04} key={certification.title}>
-                <Card className="group flex h-full flex-col p-6 border-glow-hover">
-                  <div className="mb-5 flex items-center justify-between gap-4">
-                    <span className="shimmer-on-hover grid size-12 place-items-center rounded-[8px] border border-zinc-200 bg-zinc-950 text-sm font-bold tracking-wide text-white shadow-sm dark:border-white/10 dark:bg-white dark:text-zinc-950">
-                      {certification.logo}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="badge-verified-pulse rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200">Verified</span>
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{certification.issueDate}</span>
-                    </div>
+          {/* Other projects — ghost-num hover cards grid */}
+          <p className="section-label mb-6">Other Systems</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {otherProjects.map((project, i) => (
+              <div key={project.slug} className="project-card">
+                <div className="project-card-num">{String(i + 1).padStart(2, "0")}</div>
+                <div className="project-card-body">
+                  <p className="font-mono text-[10px] uppercase tracking-wide text-[--muted-foreground] mb-1">{project.eyebrow}</p>
+                  <h3 className="text-[17px] font-bold text-[--foreground] leading-snug" style={{ fontFamily: "'Syne', sans-serif" }}>
+                    <Link href={`/projects/${project.slug}`} className="hover:text-[--accent] transition-colors">{project.title}</Link>
+                  </h3>
+                  <p className="mt-2 text-[13px] text-[--muted-foreground] leading-relaxed">{project.subtitle}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {project.tags.slice(0, 5).map((tag) => <span key={tag} className="tech-chip"><TechIcon name={tag} size={11} /><span>{tag}</span></span>)}
                   </div>
-                  <h3 className="text-lg font-semibold leading-7 text-zinc-950 dark:text-white">{certification.title}</h3>
-                  <p className="mt-1 text-sm font-medium text-blue-600 dark:text-blue-300">{certification.organization}</p>
-                  
-                  {certification.skills && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {certification.skills.map((skill) => (
-                        <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:bg-white/8 dark:text-zinc-300" key={skill}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-auto pt-6">
-                    <div className="mb-4 text-xs text-zinc-500 dark:text-zinc-400">
-                      <span className="font-semibold text-zinc-700 dark:text-zinc-300">ID: </span>
-                      <span className="break-all font-mono">{certification.credentialId}</span>
-                    </div>
-                    <Button href={certification.credentialUrl} variant="secondary">
-                      Show Credential
-                      <ExternalLink aria-hidden="true" size={16} />
-                    </Button>
+                </div>
+                <div className="project-card-footer">
+                  <span className="font-mono text-[10px] font-semibold uppercase text-[--muted-foreground]">{project.status}</span>
+                  <div className="flex items-center gap-3">
+                    {project.github && <a href={project.github} target="_blank" rel="noreferrer" className="font-mono text-[11px] font-semibold text-[--muted-foreground] hover:text-[--accent] transition-colors">GitHub ↗</a>}
+                    <Link href={`/projects/${project.slug}`} className="font-mono text-[11px] font-semibold text-[--accent]">Spec →</Link>
                   </div>
-                </Card>
-              </Reveal>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-[#f3f4f6]/70 py-20 dark:border-white/10 dark:bg-white/[0.025]" id="blog">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Technical Articles" title="Writing with implementation details.">
-            Notes on architecture, reliability, evaluation, and product decisions from an engineer&apos;s point of view.
-          </SectionHeading>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {blogPosts.map((post, index) => {
-              const preview = homeArticlePreviews[post.slug];
-              return (
-                <Reveal delay={index * 0.03} key={post.slug}>
-                  <Link className="block h-full overflow-hidden rounded-[8px] border border-zinc-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.045)] transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_16px_42px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-white/[0.045]" href={`/blog/${post.slug}`}>
-                    <BlogCover type={post.cover} />
-                    <div className="p-5">
-                      <div className="mb-4 flex items-center justify-between gap-3 text-xs">
-                        <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700 dark:bg-blue-400/10 dark:text-blue-200">{preview.category}</span>
-                        <span className="text-zinc-500 dark:text-zinc-400">{post.readTime}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold leading-7 text-zinc-950 dark:text-white">{preview.title}</h3>
-                        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-zinc-300">{preview.excerpt}</p>
-                      <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-200 pt-4 text-xs text-zinc-500 dark:border-white/10 dark:text-zinc-400">
-                        <span>{profile.name}</span>
-                        <span>{new Date(post.date).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })}</span>
-                      </div>
+
+      {/* ══════════════════════════════════════════════════════
+          §03 EXPERIENCE — exp-card header-banner cards
+      ══════════════════════════════════════════════════════ */}
+      <section id="experience" className="py-20 md:py-28 bg-[--surface]">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <span className="section-label">03 — Work Experience</span>
+          <h2 className="text-section-display text-[--foreground] mt-1 mb-12">Experience</h2>
+
+          <div className="space-y-6">
+            {internships.map((intern, idx) => (
+              <div key={intern.company} className="exp-card">
+                {/* Header banner */}
+                <div className="exp-card-header">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                      <h3 className="text-[19px] font-bold text-[--foreground]" style={{ fontFamily: "'Syne', sans-serif" }}>
+                        {intern.role}
+                      </h3>
+                      <span className="hidden sm:block w-px h-5 bg-[--border-strong]" />
+                      <p className="font-mono text-[12px] font-semibold text-[--accent]">{intern.company}</p>
                     </div>
-                  </Link>
-                </Reveal>
-              );
-            })}
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="font-mono text-[11px] font-semibold text-[--foreground]">{intern.duration}</p>
+                    <p className="font-mono text-[10px] text-[--subtle]">{intern.location}</p>
+                  </div>
+                  <span className="exp-number shrink-0 hidden md:block">{String(idx + 1).padStart(2, "0")}</span>
+                </div>
+
+                {/* Body */}
+                <div className="exp-card-body">
+                  <p className="text-[14px] leading-relaxed text-[--muted-foreground] max-w-[68ch] mb-6">{intern.overview}</p>
+
+                  <div className="grid gap-2.5 sm:grid-cols-2 mb-6">
+                    {intern.technicalContributions.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-[13px] text-[--muted-foreground]">
+                        <span className="shrink-0 font-mono text-[10px] font-bold text-[--accent] pt-0.5">{String(i + 1).padStart(2, "0")}.</span>
+                        <span className="leading-snug">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {intern.technologies.map((tech) => <span key={tech} className="tech-chip"><TechIcon name={tech} size={11} /><span>{tech}</span></span>)}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" id="faq">
-        <SectionHeading eyebrow="FAQ" title="Quick answers for recruiters and search engines.">
-          Direct answers to the questions people and AI search tools are likely to ask about Ubaith Sherif.
-        </SectionHeading>
-        <div className="grid gap-4 md:grid-cols-2">
-          {homepageFaq.map((item, index) => (
-            <Reveal delay={index * 0.03} key={item.question}>
-              <Card className="h-full p-6">
-                <h3 className="text-lg font-semibold text-zinc-950 dark:text-white">{item.question}</h3>
-                <p className="mt-3 leading-7 text-slate-600 dark:text-zinc-300">{item.answer}</p>
-              </Card>
-            </Reveal>
+
+      {/* ══════════════════════════════════════════════════════
+          §04 STACK — Animated marquee rows per category
+      ══════════════════════════════════════════════════════ */}
+      <section id="skills" className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12 mb-10">
+          <span className="section-label">04 — Stack &amp; Competencies</span>
+          <h2 className="text-section-display text-[--foreground] mt-1">Technical Stack</h2>
+          <p className="mt-3 text-[14px] text-[--muted-foreground] max-w-[48ch]">
+            Technologies I work with daily across the full AI-to-product pipeline.
+          </p>
+        </div>
+
+        {/* Alternating marquee rows — each category gets its own animated strip */}
+        <div className="space-y-8">
+          {stackCategories.map((cat, idx) => (
+            <div key={cat.label}>
+              <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+                <div className="stack-category-label">
+                  <span className="section-label shrink-0">{cat.label}</span>
+                </div>
+              </div>
+              <MarqueeRow
+                items={cat.items}
+                direction={idx % 2 === 0 ? "ltr" : "rtl"}
+                speed={20 + idx * 4}
+              />
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" id="contact">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[8px] border border-zinc-200 bg-[#111827] p-8 text-white shadow-[0_18px_54px_rgba(15,23,42,0.18)] md:p-12 dark:border-white/10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(37,99,235,0.18),transparent_30%)]" />
-            <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+
+      {/* ══════════════════════════════════════════════════════
+          §05 EDUCATION — Dark/light split card
+      ══════════════════════════════════════════════════════ */}
+      <section id="education" className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <span className="section-label">05 — Education</span>
+          <h2 className="text-section-display text-[--foreground] mt-1 mb-10">Academic Background</h2>
+
+          <div className="edu-split reveal">
+            {/* Left — dark identity panel */}
+            <div className="edu-split-left">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-300">Contact</p>
-                <h2 className="mt-4 text-balance text-4xl font-semibold md:text-6xl">Tell me what you need built.</h2>
-                <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-300">
-                  If you need an engineer who can move from model behavior to APIs, data flow, and usable screens,
-                  send the context. I will read it properly.
+                <p className="font-mono text-[11px] font-semibold" style={{ color: "var(--accent)" }}>{education.duration}</p>
+                <h3
+                  className="mt-3 text-[clamp(1.5rem,3.5vw,2.5rem)] font-bold leading-tight"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  {education.degree}
+                </h3>
+                <p className="mt-2 text-[15px] font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  {education.field}
                 </p>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Button href="/contact">
-                  Contact Me
-                  <ArrowRight aria-hidden="true" size={16} />
-                </Button>
-                <Button href={profile.linkedin} variant="secondary">
-                  <Linkedin aria-hidden="true" size={16} />
-                  LinkedIn
-                </Button>
-                <Button href={profile.github} variant="secondary">
-                  <Github aria-hidden="true" size={16} />
-                  GitHub
-                </Button>
-                <Button download="Ubaith_Sherif_AI_Engineer_Resume.pdf" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" variant="secondary">
-                  Download Resume
-                </Button>
+              <div className="mt-8">
+                <p className="font-mono text-[12px] font-semibold" style={{ color: "var(--accent)" }}>
+                  {education.institution}
+                </p>
+                <p className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {education.location}, India
+                </p>
+              </div>
+            </div>
+
+            {/* Right — details panel */}
+            <div className="edu-split-right flex flex-col justify-between gap-6">
+              <div>
+                <p className="section-label mb-3">Focus Areas</p>
+                <p className="text-[14px] leading-relaxed text-[--muted-foreground]">{education.focus}</p>
+              </div>
+              <div>
+                <p className="section-label mb-3">Coursework</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {education.coursework.map((c) => <span key={c} className="tech-chip">{c}</span>)}
+                </div>
               </div>
             </div>
           </div>
-        </Reveal>
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          §06 CAPSTONE — Dark cinematic card
+          Style: inverted (dark) card with teal radial glow,
+                 white text, white borders
+      ══════════════════════════════════════════════════════ */}
+      <section id="capstone-project" className="py-20 md:py-28 mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <span className="section-label">06 — Final Year Capstone & Research · 2025–2026</span>
+        <h2 className="text-section-display text-[--foreground] mt-1 mb-10">{teacherRobot.title}</h2>
+        <p className="text-[15px] font-medium text-[--muted-foreground] mb-10 max-w-[60ch]">{teacherRobot.subtitle}</p>
+
+        <div className="capstone-card reveal">
+          <p className="font-mono text-[10px] font-semibold tracking-widest uppercase cap-accent mb-2">
+            Project Overview
+          </p>
+          <p className="text-[14px] leading-relaxed cap-muted max-w-[68ch]">{teacherRobot.description}</p>
+
+          {/* Capabilities */}
+          <div className="mt-8">
+            <p className="font-mono text-[10px] font-semibold tracking-widest uppercase cap-accent mb-4">
+              Core Capabilities
+            </p>
+            <div className="grid gap-2.5 sm:grid-cols-2">
+              {teacherRobot.capabilities.map((cap, i) => (
+                <div key={i} className="flex items-center gap-2.5 text-[13px]">
+                  <span className="font-mono text-[10px] font-bold cap-accent">✓</span>
+                  <span className="font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>{cap}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Architecture grid */}
+          <div className="mt-8 border-t cap-border pt-6">
+            <p className="font-mono text-[10px] font-semibold tracking-widest uppercase cap-accent mb-4">
+              Technical Architecture
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { label: "Computer Vision", value: "InsightFace · ArcFace · SCRFD · OpenCV" },
+                { label: "AI / LLM / RAG",  value: "OpenAI APIs · Google Gemini · ChromaDB" },
+                { label: "Voice",           value: "Deepgram · Whisper (STT / TTS)" },
+                { label: "Backend",         value: "FastAPI · Node.js · PostgreSQL · SQLite" },
+                { label: "Frontend",        value: "React · Vite · Tailwind CSS" },
+                { label: "Edge Hardware",   value: "Raspberry Pi Integration" },
+              ].map((row) => (
+                <div key={row.label} className="cap-surface p-3">
+                  <p className="font-mono text-[9px] uppercase tracking-widest cap-accent mb-1">{row.label}</p>
+                  <p className="text-[12px] font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{row.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Research pub */}
+          <div className="mt-8 border-t cap-border pt-6">
+            <p className="font-mono text-[10px] font-semibold tracking-widest uppercase cap-accent mb-3">
+              Research Publication
+            </p>
+            <h4 className="text-[16px] font-bold" style={{ color: "rgba(255,255,255,0.92)", fontFamily: "'Syne', sans-serif" }}>
+              {teacherRobot.researchPaper.title}
+            </h4>
+            <p className="font-mono text-[11px] cap-muted mt-1">
+              {teacherRobot.researchPaper.journal} · {teacherRobot.researchPaper.status}
+            </p>
+            <p className="mt-3 text-[13px] leading-relaxed cap-muted max-w-[60ch]">{teacherRobot.researchPaper.summary}</p>
+          </div>
+
+          {/* Tech chips */}
+          <div className="mt-6 border-t cap-border pt-5 flex flex-wrap gap-1.5">
+            {teacherRobot.technologies.map((tech) => (
+              <span key={tech} className="cap-chip"><TechIcon name={tech} size={10} /><span>{tech}</span></span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          §07 RESEARCH — Large-number ghost cards in 2-col grid
+          Style: cards with giant ghost number, teal glow hover
+      ══════════════════════════════════════════════════════ */}
+      <section id="research" className="py-20 md:py-28 bg-[--surface]">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <span className="section-label">07 — Research & System Notes</span>
+          <h2 className="text-section-display text-[--foreground] mt-1 mb-12">Published Writing</h2>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            {verifiedArticles.map((article, i) => (
+              <a
+                key={article.id}
+                href={article.url}
+                target="_blank"
+                rel="noreferrer"
+                className="research-card reveal"
+                data-num={String(i + 1)}
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="section-label">{String(i + 1).padStart(2, "0")} · {article.source}</span>
+                  <span className="font-mono text-[11px] font-semibold text-[--muted-foreground] group-hover:text-[--accent] transition-colors">
+                    Read ↗
+                  </span>
+                </div>
+                <h3
+                  className="text-[16px] font-bold text-[--foreground] leading-snug mb-1"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  {article.title}
+                </h3>
+                <p className="font-mono text-[11px] text-[--subtle] mb-3">{article.author} · {article.topic}</p>
+                <p className="text-[13px] leading-relaxed text-[--muted-foreground] max-w-[48ch]">{article.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          §08 CERTIFICATIONS — Year-grouped card rows
+          Style: flat card rows per cert, year as teal header
+      ══════════════════════════════════════════════════════ */}
+      <section id="certifications" className="py-20 md:py-28 mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        <span className="section-label">08 — Certifications</span>
+        <h2 className="text-section-display text-[--foreground] mt-1 mb-12">Credentials &amp; Training</h2>
+
+        {[{ year: "2026", certs: certs2026 }, { year: "2025", certs: certs2025 }].map(({ year, certs: yearCerts }) => (
+          <div key={year} className="mb-12">
+            {/* Year header */}
+            <div className="flex items-center gap-4 mb-5">
+              <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-[--accent]">{year}</span>
+              <div className="flex-1 h-px bg-[--accent] opacity-20" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {yearCerts.map((cert) => (
+                <div key={cert.title} className="cert-row">
+                  <CertOrgLogo org={cert.organization} size={32} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13.5px] font-semibold text-[--foreground] leading-snug">{cert.title}</p>
+                    <p className="font-mono text-[10px] text-[--muted-foreground] mt-0.5">{cert.organization}</p>
+                  </div>
+                  <span className="shrink-0 font-mono text-[10px] text-[--subtle]">{cert.issueDate}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          §09 FAQ — Frequently Asked Questions
+      ══════════════════════════════════════════════════════ */}
+      <section id="faq" className="py-20 md:py-28 bg-[--surface] border-t border-[--border]">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="grid gap-12 lg:grid-cols-[340px_1fr] lg:gap-16">
+            {/* Left Column: Heading & Sticky Context */}
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <span className="section-label">09 — FAQ</span>
+              <h2 className="text-section-display text-[--foreground] mt-1">Common Questions</h2>
+              <p className="mt-4 text-[14px] leading-relaxed text-[--muted-foreground] max-w-[30ch]">
+                Direct insights on AI engineering, system architecture, technical background, and project collaboration.
+              </p>
+            </div>
+
+            {/* Right Column: Interactive Accordion */}
+            <div>
+              <FaqAccordion faqs={faqs} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════════
+          §10 CONTACT — Open for Collaboration & Send a Message
+      ══════════════════════════════════════════════════════ */}
+      <section id="contact" className="py-20 md:py-28 border-t border-[--border]">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="mb-12">
+            <span className="section-label">10 — Contact &amp; Collaboration</span>
+            <h2 className="text-section-display text-[--foreground] mt-1">Get In Touch</h2>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.3fr] items-start">
+            {/* Left Card: Open for Collaboration */}
+            <div className="contact-hero reveal">
+              <div className="relative z-10 flex flex-col justify-between h-full min-h-[380px]">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 mb-6">
+                    <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
+                    <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-white">
+                      Available for Roles &amp; Projects
+                    </span>
+                  </div>
+
+                  <h3
+                    className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-tight mb-4 text-white"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
+                    Open for Collaboration
+                  </h3>
+                  <p className="text-[14px] leading-relaxed text-white/80 max-w-[36ch]">
+                    Seeking AI engineering roles, multi-agent system architecture, or technical advisory for high-impact software products.
+                  </p>
+                </div>
+
+                <div className="mt-10 pt-6 border-t border-white/15 space-y-4">
+                  {[
+                    { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+                    { label: "GitHub", value: `github.com/${profile.githubUsername}`, href: profile.github },
+                    { label: "LinkedIn", value: "linkedin.com/in/ubaith-sherif", href: profile.linkedin },
+                  ].map((channel) => (
+                    <div key={channel.label} className="flex items-center justify-between group">
+                      <span className="font-mono text-[10px] font-semibold tracking-wider uppercase text-white/60">
+                        {channel.label}
+                      </span>
+                      <a
+                        href={channel.href}
+                        target={channel.href.startsWith("mailto") ? undefined : "_blank"}
+                        rel="noreferrer"
+                        className="font-mono text-[13px] font-bold text-white group-hover:underline flex items-center gap-1"
+                      >
+                        {channel.value} <span className="text-[11px] opacity-70 group-hover:translate-x-0.5 transition-transform">↗</span>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Card: Send a Message Form */}
+            <div className="contact-form-card reveal reveal-d1">
+              <div className="mb-6">
+                <p className="section-label">Direct Reachout</p>
+                <h3
+                  className="text-[20px] font-bold text-[--foreground] mt-1"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+                >
+                  Send a Message
+                </h3>
+              </div>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
       </section>
 
       <Footer />
     </main>
-  );
-}
-
-function AbstractEditorialVisual() {
-  return (
-    <div className="relative mx-auto aspect-square w-full max-w-[560px]">
-      <div className="absolute inset-8 rounded-full bg-[radial-gradient(circle_at_35%_30%,rgba(37,99,235,0.22),transparent_34%),radial-gradient(circle_at_68%_64%,rgba(124,58,237,0.16),transparent_32%)] blur-2xl" />
-      <svg className="relative h-full w-full" viewBox="0 0 600 600" role="img" aria-label="Abstract editorial AI engineering visual">
-        <defs>
-          <linearGradient id="editorial-blue" x1="90" x2="510" y1="80" y2="520">
-            <stop stopColor="#2563eb" stopOpacity="0.85" />
-            <stop offset="1" stopColor="#7c3aed" stopOpacity="0.65" />
-          </linearGradient>
-        </defs>
-        {/* Outer slowly rotating dashed ring */}
-        <circle className="rotate-slow-cw" cx="300" cy="300" r="210" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.4" strokeDasharray="16 10" />
-        {/* Inner counter-rotating ring */}
-        <circle className="rotate-slow-ccw" cx="300" cy="300" r="155" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.2" opacity="0.32" strokeDasharray="6 14" />
-        {/* Innermost pulsing ring */}
-        <circle className="pulse-soft" cx="300" cy="300" r="100" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.5" opacity="0.55" />
-        {/* Floating blob fill */}
-        <path className="float-slow" d="M180 330c42-110 170-166 258-104 72 51 55 173-31 220-98 54-266-3-227-116Z" fill="url(#editorial-blue)" opacity="0.1" />
-        {/* Animated draw-in connector lines */}
-        <path className="dash-draw" d="M160 370 444 206" stroke="#2563eb" strokeWidth="1.5" opacity="0.3" strokeLinecap="round" />
-        <path className="dash-draw" d="M204 180l216 238" stroke="#7c3aed" strokeWidth="1.5" opacity="0.26" strokeLinecap="round" style={{ animationDelay: "0.35s" }} />
-        <path className="dash-draw" d="M142 292h316" stroke="#2563eb" strokeWidth="1.5" opacity="0.22" strokeLinecap="round" style={{ animationDelay: "0.7s" }} />
-        <path className="dash-draw" d="M286 130v346" stroke="#7c3aed" strokeWidth="1.5" opacity="0.2" strokeLinecap="round" style={{ animationDelay: "1.05s" }} />
-        {/* Orbital nodes */}
-        {[
-          [160, 370],
-          [444, 206],
-          [204, 180],
-          [420, 418],
-          [142, 292],
-          [458, 292],
-          [286, 130],
-          [286, 476]
-        ].map(([cx, cy], index) => (
-          <circle
-            className={index % 2 ? "float-fast" : "pulse-soft"}
-            cx={cx}
-            cy={cy}
-            fill={index % 2 ? "#7c3aed" : "#2563eb"}
-            key={`${cx}-${cy}`}
-            r="8"
-            opacity="0.82"
-          />
-        ))}
-        {/* Center card */}
-        <rect x="220" y="244" width="160" height="112" rx="28" fill="white" opacity="0.72" />
-        <rect x="220" y="244" width="160" height="112" rx="28" fill="none" stroke="url(#editorial-blue)" strokeWidth="1.2" opacity="0.45" />
-        <path d="M252 285h96M252 310h62" stroke="#18181b" strokeWidth="8" strokeLinecap="round" opacity="0.72" />
-        {/* Center glow halo */}
-        <ellipse cx="300" cy="300" rx="68" ry="46" fill="url(#editorial-blue)" opacity="0.06" />
-      </svg>
-    </div>
-  );
-}
-
-function IconLink({ href, icon, label }: { href: string; icon: ReactNode; label: string }) {
-  return (
-    <a
-      aria-label={label}
-      className="grid size-11 place-items-center rounded-[8px] border border-[#d1d5db] bg-white text-[#111827] shadow-none transition hover:-translate-y-0.5 hover:border-[#9ca3af] hover:bg-[#f3f4f6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-white/20 dark:bg-white/8 dark:text-zinc-100 dark:hover:border-blue-300 dark:hover:bg-blue-400/10"
-      href={href}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
-      target={href.startsWith("http") ? "_blank" : undefined}
-    >
-      {icon}
-    </a>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-zinc-200 px-4 py-8 dark:border-white/10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between dark:text-zinc-400">
-        <p>2026 {profile.name}. AI engineering, backend systems, and clear product interfaces.</p>
-        <div className="flex flex-wrap gap-3">
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href={profile.github} rel="noreferrer" target="_blank">
-            <Github aria-hidden="true" size={15} />
-            GitHub
-          </a>
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href={profile.linkedin} rel="noreferrer" target="_blank">
-            <Linkedin aria-hidden="true" size={15} />
-            LinkedIn
-          </a>
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href={`mailto:${profile.email}`}>
-            <Mail aria-hidden="true" size={15} />
-            Email
-          </a>
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href="/Ubaith_Sherif_AI_Engineer_Resume.pdf" download="Ubaith_Sherif_AI_Engineer_Resume.pdf">
-            Resume
-          </a>
-          <a className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-white/10 dark:hover:text-white" href="#home">
-            Back to Top
-          </a>
-        </div>
-      </div>
-    </footer>
   );
 }

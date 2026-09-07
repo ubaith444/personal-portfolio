@@ -32,9 +32,9 @@ export const metadata: Metadata = {
   authors: [{ name: profile.name }],
   creator: profile.name,
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    shortcut: ["/icon.svg"],
-    apple: [{ url: "/icon.svg", type: "image/svg+xml" }]
+    icon: [{ url: "/profile.png", type: "image/png" }],
+    shortcut: ["/profile.png"],
+    apple: [{ url: "/profile.png", type: "image/png" }]
   },
   alternates: {
     canonical: siteUrl("/")
@@ -101,14 +101,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen antialiased font-body">
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{const r=document.documentElement;const s=localStorage.getItem('theme');const d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.classList.toggle('dark',d);document.addEventListener('click',function(e){const b=e.target.closest('[data-theme-toggle]');if(!b)return;const n=!r.classList.contains('dark');r.classList.toggle('dark',n);localStorage.setItem('theme',n?'dark':'light')})}catch(e){}"
+              "try{var r=document.documentElement;var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;r.classList.toggle('dark',d);document.addEventListener('click',function(e){try{var t=e&&e.target;var b=t&&t.closest?t.closest('[data-theme-toggle]'):null;if(!b)return;var n=!r.classList.contains('dark');r.classList.toggle('dark',n);localStorage.setItem('theme',n?'dark':'light');}catch(err){}})}catch(e){}"
           }}
         />
         <script
@@ -116,7 +116,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        <div id="main-content">{children}</div>
+        <div>{children}</div>
         {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>

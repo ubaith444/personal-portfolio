@@ -4,19 +4,31 @@ export function SectionHeading({
   eyebrow,
   title,
   children,
-  tone = "default"
+  index
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   children?: ReactNode;
-  tone?: "default" | "inverted";
+  index?: string;
 }) {
   return (
-    <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300">{eyebrow}</p>
-      <h2 className={tone === "inverted" ? "text-balance text-3xl font-semibold text-white md:text-5xl" : "text-balance text-3xl font-semibold text-zinc-950 dark:text-white md:text-5xl"}>{title}</h2>
+    <div className="mb-10">
+      {(index || eyebrow) ? (
+        <div className="mb-3 flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-widest text-[--muted-foreground]">
+          {index ? <span>{index}.</span> : null}
+          {eyebrow ? <span>{eyebrow}</span> : null}
+        </div>
+      ) : null}
+      <h2
+        className="font-display text-3xl font-bold leading-tight tracking-tight text-[--foreground] md:text-4xl"
+        style={{ fontFamily: "'Fraunces', serif", fontVariationSettings: "'opsz' 60" }}
+      >
+        {title}
+      </h2>
       {children ? (
-        <p className={tone === "inverted" ? "mx-auto mt-5 max-w-2xl text-pretty text-base leading-8 text-zinc-300" : "mx-auto mt-5 max-w-2xl text-pretty text-base leading-8 text-slate-600 dark:text-zinc-300"}>{children}</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[--muted-foreground]">
+          {children}
+        </p>
       ) : null}
     </div>
   );
