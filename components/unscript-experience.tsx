@@ -137,35 +137,26 @@ export function UnscriptExperience() {
           </div>
         </div>
 
-        {/* ── What I Do — Responsibilities Narrative ── */}
-        <div className="grid lg:grid-cols-[1fr_380px] gap-10 mb-20">
+        {/* ── Overview + Responsibilities ── */}
+        <div className="grid lg:grid-cols-[1fr_360px] gap-10 mb-20">
           <div>
             <p className="section-label mb-4">Overview</p>
-            <p className="text-[16px] leading-[1.85] text-[--muted-foreground] max-w-[60ch] mb-6">
-              I co-founded Unscript Labs as an AI-focused technology company, building intelligent
-              products and digital solutions for real business problems. My work spans the full
-              product lifecycle — from design and architecture through engineering, AI integration,
-              and production deployment.
-            </p>
-            <p className="text-[16px] leading-[1.85] text-[--muted-foreground] max-w-[60ch]">
-              I work across web development, LLM-powered systems, RAG pipelines, multi-agent
-              workflows, computer vision, NLP, and automation — turning business requirements into
-              functional, scalable AI products that deliver measurable outcomes.
+            <p className="text-[15px] leading-[1.8] text-[--muted-foreground] max-w-[56ch]">
+              Co-founded Unscript Labs to build AI-powered products and digital solutions for real
+              business problems — spanning web development, LLMs, RAG pipelines, multi-agent
+              workflows, computer vision, and automation.
             </p>
           </div>
 
-          {/* ── Contributions List ── */}
+          {/* ── Responsibilities ── */}
           <div className="space-y-3">
-            <p className="section-label mb-4">Responsibilities</p>
+            <p className="section-label mb-4">What I Do</p>
             {[
-              "Co-founded and help lead Unscript Labs as an AI technology company",
-              "Design and develop modern websites and full-stack web applications",
-              "Build AI chatbots using LLMs, RAG, knowledge bases, and custom workflows",
-              "Develop AI-powered software solving specific business and operational problems",
-              "Work across Generative AI, LLM APIs, Agents, Automation, NLP, Computer Vision",
-              "Build scalable backend systems and APIs using FastAPI and modern tooling",
-              "Integrate AI models and automation into practical product architectures",
-              "Own product design, technical implementation, and production deployment",
+              "Design & develop websites and full-stack web apps",
+              "Build AI chatbots with LLMs, RAG, and custom workflows",
+              "Develop AI-powered software and automation solutions",
+              "Build scalable backends and APIs with FastAPI",
+              "Own architecture, implementation, and deployment",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3 text-[13px] text-[--muted-foreground]">
                 <span className="shrink-0 font-mono text-[10px] font-bold text-[--accent] pt-0.5">
@@ -257,7 +248,7 @@ export function UnscriptExperience() {
         {/* ── Closing Founder Quote ── */}
         <div className="unscript-closing-quote">
           <div className="unscript-quote-line" aria-hidden="true" />
-          <blockquote className="unscript-quote-text">
+          <blockquote className="unscript-quote-text-sm">
             &ldquo;Don&rsquo;t just build what technology can do.{" "}
             <span className="text-[--accent]">Build what people actually need.&rdquo;</span>
           </blockquote>
