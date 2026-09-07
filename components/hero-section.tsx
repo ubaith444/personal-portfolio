@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { profile } from "@/lib/profile";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const specialtyTitles = [
   "AI Engineer & Agentic Systems",
   "Multi-Agent Workflow Architect",
@@ -113,16 +115,16 @@ export function HeroSection() {
               <div className="profile-frame relative z-10 overflow-hidden rounded-xl border border-[--border-strong] bg-[--surface] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
                 <div className="relative w-full aspect-[3/4] min-h-[350px] sm:min-h-[420px]">
                   <img
-                    src="/profile.png"
+                    src={`${BASE}/profile.png`}
                     alt="Ubaith Sherif — AI Engineer & Full-Stack Developer"
                     className="h-full w-full object-cover object-top filter brightness-[1.02] contrast-[1.02]"
                     loading="eager"
                     onError={(e) => {
                       const target = e.currentTarget;
                       if (target.src.includes("/profile.png")) {
-                        target.src = "/profile.jpg";
+                        target.src = `${BASE}/profile.jpg`;
                       } else if (target.src.includes("/profile.jpg")) {
-                        target.src = "/profile.jpeg";
+                        target.src = `${BASE}/profile.jpeg`;
                       }
                     }}
                   />
