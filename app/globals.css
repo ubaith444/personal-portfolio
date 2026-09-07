@@ -1125,6 +1125,232 @@ a:hover .arrow-shift {
   50% { opacity: 0; }
 }
 
+/* ════════════════════════════════════════════════════════════
+   UNSCRIPT LABS — Founder Experience Section
+════════════════════════════════════════════════════════════ */
+
+/* Section wrapper */
+.unscript-section {
+  background: var(--background);
+  border-top: 1px solid var(--border);
+}
+
+/* Visit link */
+.unscript-visit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent)/30;
+  border-radius: 9999px;
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--accent-light);
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.unscript-visit-link:hover {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: var(--accent);
+}
+.unscript-visit-arrow {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+/* Company Identity Block */
+.unscript-identity-block {
+  padding: 2.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent) 5%, var(--surface)) 0%,
+    var(--surface) 60%,
+    var(--background) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+.unscript-identity-block::after {
+  content: "UNSCRIPT";
+  position: absolute;
+  right: -2rem;
+  bottom: -1.2rem;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.04;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+/* Logo Mark */
+.unscript-logo-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-light);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Founder Badge */
+.unscript-founder-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Role Bar */
+.unscript-role-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 640px) {
+  .unscript-role-bar {
+    flex-direction: row;
+    align-items: center;
+    gap: 2.5rem;
+  }
+}
+
+/* Featured Work Cards */
+.unscript-work-card {
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 240ms ease;
+  cursor: default;
+}
+.unscript-work-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 36px var(--accent-glow);
+  transform: translateY(-4px);
+}
+.unscript-work-card-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Code Mockup Block */
+.unscript-code-mockup {
+  background: #0d0d0d;
+  padding: 1rem 1.25rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  min-height: 120px;
+}
+.dark .unscript-code-mockup {
+  background: #070708;
+}
+.unscript-code-dots {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 0.75rem;
+}
+.unscript-code-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.unscript-code-dots span:nth-child(1) { background: #ff5f57; }
+.unscript-code-dots span:nth-child(2) { background: #febc2e; }
+.unscript-code-dots span:nth-child(3) { background: #28c840; }
+
+/* Tag chips */
+.unscript-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  transition: border-color 160ms, color 160ms;
+}
+.unscript-work-card:hover .unscript-tag {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--foreground);
+}
+
+/* Card Footer */
+.unscript-work-card-footer {
+  margin-top: auto;
+  padding: 0.875rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Closing Quote ── */
+.unscript-closing-quote {
+  padding: 4rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.unscript-quote-line {
+  width: 3rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin-bottom: 2.5rem;
+  opacity: 0.5;
+}
+.unscript-quote-text {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+  max-width: 20ch;
+  margin: 0;
+}
+.unscript-quote-attr {
+  margin-top: 1.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+
 
 
 

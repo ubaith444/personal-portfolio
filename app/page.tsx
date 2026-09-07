@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/hero-section";
 import { JsonLd } from "@/components/json-ld";
 import { MarqueeRow } from "@/components/marquee-row";
 import { TechIcon } from "@/components/tech-icon";
+import { UnscriptExperience } from "@/components/unscript-experience";
 import { certifications } from "@/lib/certifications";
 import { education } from "@/lib/education";
 import { internships } from "@/lib/experience";
@@ -220,12 +221,16 @@ export default function HomePage() {
 
 
       {/* ══════════════════════════════════════════════════════
-          §03 EXPERIENCE — exp-card header-banner cards
+          §03 EXPERIENCE — Unscript Labs Founder + Internships
       ══════════════════════════════════════════════════════ */}
-      <section id="experience" className="py-20 md:py-28 bg-[--surface]">
+      <UnscriptExperience />
+
+      {/* Internship sub-section */}
+      <section id="internships" className="py-12 md:py-16 bg-[--surface] border-t border-[--border]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-          <span className="section-label">03 — Work Experience</span>
-          <h2 className="text-section-display text-[--foreground] mt-1 mb-12">Experience</h2>
+          <span className="section-label mb-2 block">Engineering Experience</span>
+          <h3 className="text-[clamp(1.2rem,2.5vw,1.7rem)] font-bold text-[--foreground] mb-10"
+            style={{ fontFamily: "'Syne', sans-serif" }}>Internships</h3>
 
           <div className="space-y-6">
             {internships.map((intern, idx) => (

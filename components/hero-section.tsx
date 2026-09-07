@@ -114,6 +114,7 @@ export function HeroSection() {
               {/* Profile Image Container */}
               <div className="profile-frame relative z-10 overflow-hidden rounded-xl border border-[--border-strong] bg-[--surface] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
                 <div className="relative w-full aspect-[3/4] min-h-[350px] sm:min-h-[420px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`${BASE}/profile.png`}
                     alt="Ubaith Sherif — AI Engineer & Full-Stack Developer"

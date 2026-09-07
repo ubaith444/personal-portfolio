@@ -6,6 +6,7 @@ export function ProfileImage() {
   return (
     <div className="relative w-full max-w-[300px] animate-profile-in">
       <div className="profile-frame relative bg-[--surface] min-h-[350px]" style={{ aspectRatio: "3/4", width: "100%" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`${BASE}/profile.png`}
           alt="Ubaith Sherif — AI Engineer & Full-Stack Developer"
