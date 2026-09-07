@@ -92,23 +92,18 @@ export function UnscriptExperience() {
 
         {/* ── Company Identity Block ── */}
         <div className="unscript-identity-block mb-14">
-          {/* Logo + Company Name Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-            <div className="unscript-logo-mark" aria-label="Unscript Labs">
-              <span className="font-display text-lg font-black tracking-tight text-[--accent]">UL</span>
+          {/* Company Name Row */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h3 className="text-[22px] sm:text-[26px] font-black tracking-tight text-[--foreground]"
+                style={{ fontFamily: "'Syne', sans-serif" }}>
+                Unscript Labs
+              </h3>
+              <span className="unscript-founder-badge">Co-Founder</span>
             </div>
-            <div>
-              <div className="flex items-center gap-3 flex-wrap">
-                <h3 className="text-[22px] sm:text-[26px] font-black tracking-tight text-[--foreground]"
-                  style={{ fontFamily: "'Syne', sans-serif" }}>
-                  Unscript Labs
-                </h3>
-                <span className="unscript-founder-badge">Co-Founder</span>
-              </div>
-              <p className="font-mono text-[12px] text-[--accent] font-semibold mt-0.5 tracking-wide">
-                AI-Focused Technology Studio
-              </p>
-            </div>
+            <p className="font-mono text-[12px] text-[--accent] font-semibold mt-0.5 tracking-wide">
+              AI-Focused Technology Studio
+            </p>
           </div>
 
           {/* Role + Duration Bar */}
