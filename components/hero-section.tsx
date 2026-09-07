@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { profile } from "@/lib/profile";
 
 const specialtyTitles = [
@@ -112,16 +111,22 @@ export function HeroSection() {
 
               {/* Profile Image Container */}
               <div className="profile-frame relative z-10 overflow-hidden rounded-xl border border-[--border-strong] bg-[--surface] shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
-                <div className="relative w-full" style={{ aspectRatio: "3/4" }}>
-                  <Image
+                <div className="relative w-full aspect-[3/4] min-h-[350px] sm:min-h-[420px]">
+                  <img
                     src="/profile.png"
                     alt="Ubaith Sherif — AI Engineer & Full-Stack Developer"
-                    fill
-                    className="object-cover object-top filter brightness-[1.02] contrast-[1.02]"
-                    sizes="(max-width: 768px) 260px, 340px"
-                    priority
+                    className="h-full w-full object-cover object-top filter brightness-[1.02] contrast-[1.02]"
+                    loading="eager"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.includes("/profile.png")) {
+                        target.src = "/profile.jpg";
+                      } else if (target.src.includes("/profile.jpg")) {
+                        target.src = "/profile.jpeg";
+                      }
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[--background]/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[--background]/40 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
             </div>
