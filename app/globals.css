@@ -32,25 +32,25 @@
 .dark {
   color-scheme: dark;
 
-  --background:       #080808;
-  --foreground:       #f0f0f0;
+  --background:       #0a0a0b;
+  --foreground:       #f4f4f5;
 
-  --surface:          #111111;
-  --surface-2:        #1a1a1a;
+  --surface:          #131316;
+  --surface-2:        #1d1d22;
 
-  --muted-foreground: #9ca3af;
-  --subtle:           #4b5563;
+  --muted-foreground: #a1a1aa;
+  --subtle:           #71717a;
 
-  --border:           #1e1e1e;
-  --border-strong:    #2a2a2a;
+  --border:           #27272a;
+  --border-strong:    #3f3f46;
 
   --accent:           #2dd4bf;
   --accent-2:         #14b8a6;
-  --accent-glow:      rgba(45, 212, 191, 0.18);
-  --accent-light:     rgba(45, 212, 191, 0.08);
+  --accent-glow:      rgba(45, 212, 191, 0.22);
+  --accent-light:     rgba(45, 212, 191, 0.12);
 
   --success:          #34d399;
-  --code-bg:          #111111;
+  --code-bg:          #131316;
 }
 
 /* ─── Reset & Base ────────────────────────────────────────── */
@@ -346,8 +346,14 @@ a:hover .arrow-shift {
 
 /* ─── About — dark band with oversized quote ─────────────── */
 .about-band {
-  background: var(--foreground);
-  color: var(--background);
+  background: #0d0d0d;
+  color: #f4f4f5;
+}
+.dark .about-band {
+  background: #111827;
+  color: #f4f4f5;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .about-band .about-accent { color: var(--accent); }
 
@@ -443,11 +449,16 @@ a:hover .arrow-shift {
 /* ─── Capstone — dark cinematic card ─────────────────────── */
 .capstone-card {
   border-radius: 16px;
-  background: var(--foreground);
-  color: var(--background);
+  background: #0d0d0d;
+  color: #f4f4f5;
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
+}
+.dark .capstone-card {
+  background: #111827;
+  border: 1px solid var(--border-strong);
+  color: #f4f4f5;
 }
 .capstone-card::after {
   content: "";
@@ -458,25 +469,25 @@ a:hover .arrow-shift {
   height: 280px;
   border-radius: 50%;
   background: var(--accent);
-  opacity: 0.08;
+  opacity: 0.10;
   pointer-events: none;
 }
 .capstone-card .cap-accent   { color: var(--accent); }
-.capstone-card .cap-muted    { color: color-mix(in srgb, var(--background) 55%, transparent); }
-.capstone-card .cap-border   { border-color: rgba(255,255,255,0.10); }
-.capstone-card .cap-surface  { background: rgba(255,255,255,0.05); border-radius: 10px; }
+.capstone-card .cap-muted    { color: rgba(240, 240, 240, 0.75); }
+.capstone-card .cap-border   { border-color: rgba(255, 255, 255, 0.12); }
+.capstone-card .cap-surface  { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
 .capstone-card .cap-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   padding: 0.18rem 0.55rem;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 4px;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.6rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.05);
+  color: rgba(240, 240, 240, 0.90);
+  background: rgba(255, 255, 255, 0.08);
   white-space: nowrap;
 }
 
@@ -641,30 +652,35 @@ a:hover .arrow-shift {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  background: var(--foreground);
-  color: var(--background);
+  background: #0d0d0d;
+  color: #f4f4f5;
   padding: 2.5rem;
+}
+.dark .project-featured-banner {
+  background: #111827;
+  border: 1px solid var(--border-strong);
+  color: #f4f4f5;
 }
 .project-featured-banner::before {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 60% 80% at 80% 20%, var(--accent) 0%, transparent 70%);
-  opacity: 0.12;
+  opacity: 0.15;
   pointer-events: none;
 }
 .project-featured-banner .pfb-label { color: var(--accent); }
-.project-featured-banner .pfb-muted  { color: rgba(255,255,255,0.55); }
-.project-featured-banner .pfb-border { border-color: rgba(255,255,255,0.10); }
+.project-featured-banner .pfb-muted  { color: rgba(240, 240, 240, 0.75); }
+.project-featured-banner .pfb-border { border-color: rgba(255, 255, 255, 0.12); }
 .project-featured-banner .pfb-chip {
   display: inline-flex; align-items: center; gap: 0.3rem;
   padding: 0.2rem 0.55rem;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 4px;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.6875rem; font-weight: 500;
-  color: rgba(255,255,255,0.75);
-  background: rgba(255,255,255,0.06);
+  color: rgba(240, 240, 240, 0.90);
+  background: rgba(255, 255, 255, 0.08);
   white-space: nowrap;
 }
 
@@ -773,14 +789,18 @@ a:hover .arrow-shift {
   .edu-split { grid-template-columns: 1fr 1fr; }
 }
 .edu-split-left {
-  background: var(--foreground);
-  color: var(--background);
+  background: #0d0d0d;
+  color: #f4f4f5;
   padding: 3rem 2.5rem;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.dark .edu-split-left {
+  background: #111827;
+  color: #f4f4f5;
 }
 .edu-split-left::after {
   content: "B.Tech";
